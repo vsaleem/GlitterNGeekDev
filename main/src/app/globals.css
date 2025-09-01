@@ -1,31 +1,196 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Minimal global overrides left intentionally blank as utilities & components moved into Tailwind plugin. */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer components {
+	.fun-shape-card {
+		position: relative;
+		background: #fff;
+		border-radius: 56% 44% 52% 48% / 50% 55% 45% 50%;
+		box-shadow: 0 8px 24px -6px rgba(149, 76, 233, .25), 0 4px 12px -2px rgba(236, 72, 153, .15);
+		transition: border-radius .8s ease, box-shadow .4s ease, transform .6s ease;
+	}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+	.fun-shape-card:hover {
+		border-radius: 45% 55% 42% 58% / 55% 45% 50% 50%;
+		box-shadow: 0 10px 30px -4px rgba(139, 92, 246, .35), 0 6px 16px -2px rgba(236, 72, 153, .22);
+	}
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+	.fun-shape-card:focus {
+		box-shadow: 0 10px 30px -4px rgba(139, 92, 246, .35), 0 6px 16px -2px rgba(236, 72, 153, .22);
+		outline: none;
+	}
 
-/* Hide Next.js dev toast (the circular "N" bubble in bottom-left) in development */
-.nextjs-toast {
-  display: none !important;
+	.fun-shape-card:focus-visible {
+		outline: none;
+		box-shadow: 0 0 0 3px rgba(255, 255, 255, .95), 0 0 0 6px rgba(236, 72, 153, .55), 0 10px 30px -4px rgba(139, 92, 246, .35), 0 6px 16px -2px rgba(236, 72, 153, .22);
+	}
+
+	.fun-shape-card::before {
+		content: "";
+		position: absolute;
+		inset: 0;
+		padding: 2px;
+		border-radius: inherit;
+		background: linear-gradient(135deg, rgba(236, 72, 153, .9), rgba(139, 92, 246, .9), rgba(236, 72, 153, .9));
+		-webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+		mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+		-webkit-mask-composite: xor;
+		mask-composite: exclude;
+		pointer-events: none;
+	}
+
+	.fun-shape-card::after {
+		content: "";
+		position: absolute;
+		inset: 4% 6%;
+		border-radius: inherit;
+		background: radial-gradient(circle at 30% 25%, rgba(236, 72, 153, .10), transparent 60%), radial-gradient(circle at 70% 70%, rgba(139, 92, 246, .10), transparent 65%);
+		pointer-events: none;
+	}
+
+	@media (min-width:768px) {
+		.fun-shape-card {
+			border-radius: 42% 58% 46% 54% / 60% 40% 52% 48%;
+		}
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.fun-shape-card.animate-blobMorph {
+			animation: blobMorph 26s ease-in-out infinite;
+		}
+	}
+
+	/* Pink halo glow utility for hero heading */
+	.heading-pink-glow {
+		position: relative;
+		text-shadow:
+			0 0 4px rgba(236, 72, 153, .55),
+			0 0 10px rgba(236, 72, 153, .45),
+			0 0 18px rgba(236, 72, 153, .35),
+			0 0 28px rgba(236, 72, 153, .25);
+	}
+
+	.heading-pink-glow .text-white {
+		text-shadow:
+			0 0 6px rgba(255, 255, 255, .65),
+			0 0 14px rgba(255, 255, 255, .45),
+			0 0 24px rgba(236, 72, 153, .35);
+	}
+
+	/* Badge sheen interaction (moved from Tailwind plugin) */
+	.badge-interact {
+		position: relative;
+		overflow: hidden;
+		isolation: isolate;
+		cursor: pointer;
+		transition: transform .35s cubic-bezier(.4, 0, .2, 1), box-shadow .35s ease, background-color .35s ease;
+	}
+
+	/* Micro-interaction: pop & shimmer on text */
+	.badge-interact .coming-soon-text {
+		display: inline-block;
+		position: relative;
+		will-change: transform, filter;
+	}
+
+	.badge-interact:hover .coming-soon-text,
+	.badge-interact:focus-visible .coming-soon-text {
+		animation: csPop 620ms cubic-bezier(.65, .05, .36, 1), csShimmer 1.4s ease forwards;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+
+		.badge-interact:hover .coming-soon-text,
+		.badge-interact:focus-visible .coming-soon-text {
+			animation: none !important;
+		}
+	}
+
+	.badge-interact::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: -150%;
+		width: 55%;
+		height: 100%;
+		background: linear-gradient(110deg, transparent 0%, rgba(255, 255, 255, .55) 45%, rgba(255, 255, 255, .25) 60%, transparent 100%);
+		transform: skewX(-25deg);
+		opacity: 0;
+		pointer-events: none;
+		animation: badgeSheenIdle 11s ease-in-out infinite;
+	}
+
+	.badge-interact:hover::after,
+	.badge-interact:focus-visible::after {
+		animation: badgeSheen 1s ease forwards;
+		opacity: 1;
+	}
+
+	.badge-interact:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 6px 18px -6px rgba(0, 0, 0, .4);
+	}
+
+	.badge-interact:active {
+		transform: translateY(-1px) scale(.97);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+
+		.badge-interact,
+		.badge-interact::after {
+			animation: none !important;
+			transition: none !important;
+		}
+	}
+
+	/* Micro-interaction keyframes */
+	@keyframes csPop {
+		0% {
+			transform: scale(1);
+		}
+
+		38% {
+			transform: scale(1.1);
+		}
+
+		55% {
+			transform: scale(.96);
+		}
+
+		72% {
+			transform: scale(1.035);
+		}
+
+		100% {
+			transform: scale(1);
+		}
+	}
+
+	@keyframes csShimmer {
+		0% {
+			filter: drop-shadow(0 0 0 rgba(255, 255, 255, 0));
+			letter-spacing: .5px;
+		}
+
+		30% {
+			filter: drop-shadow(0 0 4px rgba(255, 255, 255, .4));
+		}
+
+		55% {
+			filter: drop-shadow(0 0 6px rgba(236, 72, 153, .55));
+			letter-spacing: 1px;
+		}
+
+		80% {
+			filter: drop-shadow(0 0 3px rgba(139, 92, 246, .35));
+			letter-spacing: .6px;
+		}
+
+		100% {
+			filter: drop-shadow(0 0 0 rgba(255, 255, 255, 0));
+			letter-spacing: .5px;
+		}
+	}
 }
