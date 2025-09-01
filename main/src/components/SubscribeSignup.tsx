@@ -32,7 +32,7 @@ export function SubscribeSignup({ className = "", unstyled = false }: SubscribeS
           Sign up for updates and more
         </label>
       </div>
-  <div className="flex flex-row gap-2 max-[359px]:flex-col">
+  <div className="flex flex-row gap-2 max-sm:flex-col">
         <input
           id="subscribe-to-updates-email"
           name="email"
