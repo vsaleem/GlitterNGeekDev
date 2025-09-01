@@ -1,15 +1,4 @@
-<div align="center">
-	<img src="public/GNGLogoBrand.svg" alt="GlitterNGeek Logo" height="90" />
-  
-	<h1>GlitterNGeek</h1>
-	<p><strong>Learn Tech & Live Soft.</strong><br/>A calm, friendly space for web dev & AI beginners who want clarity, vibes, and forward momentum without the overwhelm.</p>
-	<p>
-		<a href="https://www.youtube.com/channel/UCm3QJEpnGDirp-9bPkr02Vw" target="_blank" rel="noopener noreferrer">YouTube Channel</a> ·
-		<a href="#roadmap">Roadmap</a> ·
-		<a href="#contributing">Contributing</a>
-	</p>
-</div>
-
+## GLITTERNGEEK LLC.
 ---
 
 ## ✨ What This Is
