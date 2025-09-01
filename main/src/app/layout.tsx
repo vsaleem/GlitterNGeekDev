@@ -1,6 +1,9 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono, DynaPuff, Quicksand } from "next/font/google";
 import "./globals.css";
+import { DARK_MODE_MEDIA } from "@/util/constants";
+import FloatingLogo from "@/components/FloatingLogo";
+import DevOverlayHider from "@/components/DevOverlayHider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,9 +15,40 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const dynapuff = DynaPuff({
+  variable: "--font-display",
+  subsets: ["latin"],
+  weight: ["400","500","600","700"],
+});
+
+const quicksand = Quicksand({
+  variable: "--font-body",
+  subsets: ["latin"],
+  weight: ["300","400","500","600","700"],
+});
+
 export const metadata: Metadata = {
   title: "GlitterNGeek",
   description: "GlitterNGeek - Where Tech Meets Soft Life - Developer Profile",
+  icons: {
+    icon: [
+      { url: "/icons/icon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/icons/icon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icons/icon-48x48.png", sizes: "48x48", type: "image/png" },
+      { url: "/icons/icon-16x16-dark.png", sizes: "16x16", type: "image/png", media: DARK_MODE_MEDIA },
+      { url: "/icons/icon-32x32-dark.png", sizes: "32x32", type: "image/png", media: DARK_MODE_MEDIA },
+      { url: "/icons/icon-48x48-dark.png", sizes: "48x48", type: "image/png", media: DARK_MODE_MEDIA },
+    ],
+    apple: [
+      { url: "/icons/icon-180x180.png", sizes: "180x180", type: "image/png" },
+      { url: "/icons/icon-180x180-dark.png", sizes: "180x180", type: "image/png", media: DARK_MODE_MEDIA },
+    ],
+    shortcut: ["/icons/icon-32x32.png"],
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
 };
 
 export default function RootLayout({
@@ -23,11 +57,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${dynapuff.variable} ${quicksand.variable} ${quicksand.className}`}>
+      <body className="antialiased font-body">
         {children}
+        {process.env.NODE_ENV === "development" && (
+          <>
+            <DevOverlayHider />
+            <FloatingLogo />
+          </>
+        )}
       </body>
     </html>
   );
