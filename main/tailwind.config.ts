@@ -40,8 +40,8 @@ const config: Config = {
         softPulsePlay: 'softPulsePlay 2.4s ease-in-out infinite',
         badgeSheen: 'badgeSheen 1s ease forwards',
         badgeSheenIdle: 'badgeSheenIdle 11s ease-in-out infinite',
-  glitterScroll: 'glitterScroll 18s linear infinite,glitterFlicker 2.8s ease-in-out infinite',
-  blobMorph: 'blobMorph 26s ease-in-out infinite'
+        glitterScroll: 'glitterScroll 18s linear infinite,glitterFlicker 2.8s ease-in-out infinite',
+        blobMorph: 'blobMorph 26s ease-in-out infinite'
       }
     }
   },
