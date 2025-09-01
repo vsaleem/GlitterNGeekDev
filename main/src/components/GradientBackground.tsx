@@ -136,9 +136,44 @@ export function GradientBackground({
         />
       )}
   {(animate || tintShift) && (
-    <style>{`@keyframes gngGradientDrift { 0% { transform: scale(1) translate3d(0,0,0); } 50% { transform: scale(${1 + 0.02*ms}) translate3d(${1.2*ms}%, ${-0.8*ms}%,0); } 100% { transform: scale(1) translate3d(0,0,0); } }
-@keyframes gngCottonFloat { 0% { transform: translate3d(0%,0%,0); } 33% { transform: translate3d(${2*ms}%, ${-1*ms}%,0); } 66% { transform: translate3d(${ -1*ms }%, ${1.5*ms}%,0); } 100% { transform: translate3d(0%,0%,0); } }
-@keyframes gngHueCycle { 0% { --gng-hue: 0deg; } 50% { --gng-hue: ${tr}deg; } 100% { --gng-hue: 0deg; } }`}</style>
+    <style>{`
+      @keyframes gngGradientDrift {
+        0% {
+          transform: scale(1) translate3d(0,0,0);
+        }
+        50% {
+          transform: scale(${1 + 0.02*ms}) translate3d(${1.2*ms}%, ${-0.8*ms}%,0);
+        }
+        100% {
+          transform: scale(1) translate3d(0,0,0);
+        }
+      }
+      @keyframes gngCottonFloat {
+        0% {
+          transform: translate3d(0%,0%,0);
+        }
+        33% {
+          transform: translate3d(${2*ms}%, ${-1*ms}%,0);
+        }
+        66% {
+          transform: translate3d(${ -1*ms }%, ${1.5*ms}%,0);
+        }
+        100% {
+          transform: translate3d(0%,0%,0);
+        }
+      }
+      @keyframes gngHueCycle {
+        0% {
+          --gng-hue: 0deg;
+        }
+        50% {
+          --gng-hue: ${tr}deg;
+        }
+        100% {
+          --gng-hue: 0deg;
+        }
+      }
+    `}</style>
   )}
     </div>
   );
