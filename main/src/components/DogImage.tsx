@@ -25,7 +25,7 @@ export function DogImage({
   priority = false,
   className,
   withGlow = true,
-  alt = "GlitterNGeek mascot dog wearing glasses",
+  alt = "GlitterNGeek dog mascot wearing glasses",
   mirrored = false,
 }: DogImageProps) {
   if (float) {
