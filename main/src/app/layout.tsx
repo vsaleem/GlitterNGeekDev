@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, DynaPuff, Quicksand } from "next/font/google";
 import "./globals.css";
+import { DARK_MODE_MEDIA } from "@/util/constants";
 import FloatingLogo from "@/components/FloatingLogo";
 import DevOverlayHider from "@/components/DevOverlayHider";
 
@@ -34,13 +35,13 @@ export const metadata: Metadata = {
       { url: "/icons/icon-16x16.png", sizes: "16x16", type: "image/png" },
       { url: "/icons/icon-32x32.png", sizes: "32x32", type: "image/png" },
       { url: "/icons/icon-48x48.png", sizes: "48x48", type: "image/png" },
-  { url: "/icons/icon-16x16-dark.png", sizes: "16x16", type: "image/png", media: "(prefers-color-scheme: dark)" },
-  { url: "/icons/icon-32x32-dark.png", sizes: "32x32", type: "image/png", media: "(prefers-color-scheme: dark)" },
-  { url: "/icons/icon-48x48-dark.png", sizes: "48x48", type: "image/png", media: "(prefers-color-scheme: dark)" },
+      { url: "/icons/icon-16x16-dark.png", sizes: "16x16", type: "image/png", media: DARK_MODE_MEDIA },
+      { url: "/icons/icon-32x32-dark.png", sizes: "32x32", type: "image/png", media: DARK_MODE_MEDIA },
+      { url: "/icons/icon-48x48-dark.png", sizes: "48x48", type: "image/png", media: DARK_MODE_MEDIA },
     ],
     apple: [
       { url: "/icons/icon-180x180.png", sizes: "180x180", type: "image/png" },
-  { url: "/icons/icon-180x180-dark.png", sizes: "180x180", type: "image/png", media: "(prefers-color-scheme: dark)" },
+      { url: "/icons/icon-180x180-dark.png", sizes: "180x180", type: "image/png", media: DARK_MODE_MEDIA },
     ],
     shortcut: ["/icons/icon-32x32.png"],
   },
