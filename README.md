@@ -1,5 +1,5 @@
 <div align="center">
-	<img src="public/GNGLogoBrand.svg" alt="GlitterNGeek Logo" height="390" />
+	<img src="public/GNGLogoBrand.svg" alt="GlitterNGeek Logo" height="90" />
   
 	<h1>GlitterNGeek</h1>
 	<p><strong>Learn Tech & Live Soft.</strong><br/>A calm, friendly space for web dev & AI beginners who want clarity, vibes, and forward momentum without the overwhelm.</p>
