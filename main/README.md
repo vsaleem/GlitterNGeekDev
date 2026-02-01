@@ -1,7 +1,7 @@
 <div align="center">
 	<img src="public/GNGLogoBrand.svg" alt="GlitterNGeek Logo" height="90" />
   
-	<h1>GlitterNGeek</h1>
+	<h1>GlitterNGeek.Dev</h1>
 	<p><strong>Learn Tech & Live Soft.</strong><br/>A calm, friendly space for web dev & AI beginners who want clarity, vibes, and forward momentum without the overwhelm.</p>
 	<p>
 		<a href="https://www.youtube.com/channel/UCm3QJEpnGDirp-9bPkr02Vw" target="_blank" rel="noopener noreferrer">YouTube Channel</a> ·
@@ -124,6 +124,6 @@ Optimized for Vercel (edge-ready, Next.js 15). A standard `vercel` deploy runs `
 Copyright © GlitterNGeek, LLC. All rights reserved. Unless explicitly stated, code examples are not open‑licensed for commercial reuse.
 
 ## 💌 Stay in the Loop
-Subscribe via the in-site form or follow on YouTube for course launch updates (January 2026 target).
+Subscribe via the in-site form or follow on YouTube for course launch updates (March 2026 target).
 
 — Learn Tech. Live Soft. Repeat.
