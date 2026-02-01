@@ -1,4 +1,4 @@
-## GLITTERNGEEK LLC.
+## GLITTERNGEEK.DEV.
 ---
 
 ## ✨ What This Is
@@ -113,6 +113,6 @@ Optimized for Vercel (edge-ready, Next.js 15). A standard `vercel` deploy runs `
 Copyright © GlitterNGeek, LLC. All rights reserved. Unless explicitly stated, code examples are not open‑licensed for commercial reuse.
 
 ## 💌 Stay in the Loop
-Subscribe via the in-site form or follow on YouTube for course launch updates (January 2026 target).
+Subscribe via the in-site form or follow on YouTube for course launch updates (March 2026 target).
 
 — Learn Tech. Live Soft. Repeat.
