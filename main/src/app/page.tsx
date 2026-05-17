@@ -1,218 +1,158 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
-import { Sparkles } from "lucide-react";
 import Image from "next/image";
-import { GradientBackground } from "@/components/GradientBackground";
-import { DogImage } from "@/components/DogImage";
-import { LearningPromiseSection } from "@/components/LearningPromiseSection";
-import { FeaturesSection } from "@/components/FeaturesSection";
-import { FooterSection } from "@/components/FooterSection";
-import { SiteNav } from "@/components/SiteNav";
-import { DynaPuff } from "next/font/google";
+import Link from "next/link";
+import { ArrowRight, Sparkles } from "lucide-react";
+import CtaPair from "@/components/gng/CtaPair";
+import GngFooter from "@/components/gng/GngFooter";
+import PageNav from "@/components/gng/PageNav";
+import SoftMascot from "@/components/gng/SoftMascot";
+import {
+  homepageHighlights,
+  learningPillars,
+  youtubeUrl,
+} from "@/components/gng/pageData";
 
-// Expose DynaPuff as a CSS variable so base heading styles (var(--font-display)) pick it up
-const dynaPuff = DynaPuff({
-  subsets: ["latin"],
-  weight: ["400", "600"],
-  display: "swap",
-  variable: "--font-display",
-});
-
-export default function LandingPage() {
+export default function HomePage() {
   return (
-    <div
-      className={`${dynaPuff.variable} relative min-h-screen flex flex-col items-center justify-start p-6 pt-28 md:pt-32`}
-    >
-      <SiteNav />
-      <GradientBackground
-        variant="light"
-        brightness={1.05}
-        saturation={1.05}
-        animate
-        motionStrength={1.4}
-        tintShift
-        tintRange={22}
-        tintDuration={60}
-        cottonIntensity={0.6}
-      />
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        <div className="flex justify-center mt-25 mb-30 md:mb-30 md:mt-25">
-          <motion.div
-            initial={{ scale: 0.7, opacity: 0, rotate: -3 }}
-            animate={{ scale: 1, opacity: 1, rotate: 0 }}
-            transition={{ duration: 1.05, ease: [0.22, 0.9, 0.3, 1.04] }}
-            className="will-change-transform origin-center drop-shadow-[0_10px_32px_rgba(139,92,246,0.25)]"
-          >
-            <Image
-              src="/laptop.png"
-              alt="Laptop illustration"
-              width={400}
-              height={400}
-              priority
-            />
-          </motion.div>
-        </div>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold flex items-center justify-center leading-tight gap-2">
-          <Sparkles className="w-8 h-8 text-pink-300" />
-          <span
-            className={`${dynaPuff.className} text-purple-900 heading-pink-glow sm:block`}
-          >
-            Learn Tech &
-          </span>
-          <span
-            className={`${dynaPuff.className} text-white heading-pink-glow sm:block`}
-          >
-            Live Soft:
-          </span>
-        </h1>
-        <h2 className="heading-pink-glow text-2xl sm:text-2xl md:text-3xl mt-4 mb-6 font-bold flex items-center justify-center gap-2 text-white">
-          Web Development and AI Courses
-        </h2>
-        <p className="text-lg sm:text-lg md:text-xl text-gray-700 mb-20">
-          A cozy space where tech, coding, and AI meet soft life vibes. Learn,
-          code, and grow with me ✨
-        </p>
-      </motion.div>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.3 }}
-        className="flex gap-4"
-      >
-        <a
-          href="https://www.youtube.com/channel/UCm3QJEpnGDirp-9bPkr02Vw"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Button
-            size="lg"
-            variant="whiteOutline"
-            className="rounded-2xl shadow-lg"
-          >
-            Subscribe on YouTube
-          </Button>
-        </a>
-      </motion.div>
-      {/* GlitterNGeek's YouTube Section */}
-      <section className="mt-24 max-w-5xl w-full flex flex-col items-center text-center px-4">
-        <div className="relative w-full max-w-5xl">
-          <div
-            className="fun-shape-card relative shadow-xl px-8 md:px-16 pb-16 md:pb-32 pt-40 overflow-visible animate-blobMorph"
-            tabIndex={0}
-            aria-label="Featured GlitterNGeek YouTube section"
-          >
-            {/* Flex layout for image + content (doggy overlaps top ~15%) */}
-            <div className="flex flex-col md:flex-row items-center md:items-center md:gap-12 -mt-24 md:-mt-40">
-              {/* Doggy Image column */}
-              <div className="relative shrink-0">
-                {/* Mobile size */}
-                <div className="md:hidden">
-                  <DogImage
-                    width={240}
-                    height={240}
-                    float
-                    withGlow
-                    mirrored
-                    priority
-                  />
-                </div>
-                {/* Desktop size */}
-                <div className="hidden md:block">
-                  <DogImage
-                    width={360}
-                    height={360}
-                    float
-                    withGlow
-                    mirrored
-                    priority
-                  />
-                </div>
+    <main className="min-h-screen overflow-hidden bg-[#fbf7ff] text-slate-900">
+      <section className="relative">
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_20%,rgba(236,72,153,0.16),transparent_28%),radial-gradient(circle_at_82%_12%,rgba(139,92,246,0.14),transparent_30%),linear-gradient(135deg,#fff_0%,#fff4fb_46%,#efe6ff_100%)]" />
+        <div className="mx-auto max-w-7xl px-5 py-6 sm:px-8 lg:px-10">
+          <PageNav />
+
+          <div className="grid min-h-[760px] grid-cols-1 items-center gap-10 py-14 lg:grid-cols-[1.02fr_0.98fr] lg:py-20">
+            <div>
+              <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-pink-200 bg-white px-3 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-purple-900">
+                <Sparkles className="h-3.5 w-3.5 text-pink-500" />
+                Soft life tech school
               </div>
-              {/* Content column */}
-              <div className="mt-8 md:mt-0 md:flex-1 md:text-left flex flex-col justify-center md:pr-10 lg:pr-12">
-                <div className="w-full md:max-w-[520px] lg:max-w-[560px] xl:max-w-[600px] md:pt-10 lg:pt-12">
-                  <h2
-                    className={`${dynaPuff.className} text-3xl md:text-4xl font-bold text-purple-900 md:mt-5 mb-6 text-glow-pink-soft`}
+              <h1 className="max-w-3xl font-display text-5xl font-semibold leading-[0.98] tracking-normal text-purple-950 sm:text-6xl lg:text-7xl">
+                Learn tech with calm, clarity, and a little glitter.
+              </h1>
+              <p className="mt-6 max-w-xl text-lg leading-8 text-slate-700">
+                Beginner-friendly web development and AI lessons for creative
+                builders who want structure, confidence, and community.
+              </p>
+              <div className="mt-8">
+                <CtaPair />
+              </div>
+
+              <div className="mt-10 grid gap-3 sm:grid-cols-3">
+                {learningPillars.map((pillar) => (
+                  <div
+                    key={pillar.label}
+                    className="rounded-lg border border-purple-100 bg-white/85 p-4 shadow-sm"
                   >
-                    {`GlitterNGeek's YouTube`}
-                  </h2>
-                  <p className="text-gray-700 mb-8 md:mb-6">
-                    Dive into a world of tech tutorials, soft life energy, and
-                    community vibes — all through
-                    <strong> Free Beginner Courses and Tutorials</strong>
-                  </p>
-                  <div className="flex justify-center md:justify-start mb-8">
-                    <Image
-                      src="/lights.jpg"
-                      alt="Decorative circuit lights"
-                      width={300}
-                      height={75}
-                      className="border-2 border-purple-600 rounded-md block"
-                    />
+                    <pillar.icon className="mb-3 h-5 w-5 text-pink-500" />
+                    <h2 className="text-sm font-bold text-purple-950">
+                      {pillar.label}
+                    </h2>
+                    <p className="mt-2 text-sm leading-6 text-slate-600">
+                      {pillar.copy}
+                    </p>
                   </div>
-                  <a
-                    href="https://www.youtube.com/channel/UCm3QJEpnGDirp-9bPkr02Vw"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block"
-                  >
-                    <Button
-                      size="lg"
-                      variant="whiteOutline"
-                      className="yt-pill-btn rounded-2xl shadow-md transition-all duration-500 ease-out flex items-center gap-2"
-                    >
-                      <span className="w-7 h-7 flex items-center justify-center">
-                        {/* Cute little play icon 💜*/}
-                        <svg
-                          viewBox="0 0 24 24"
-                          className="soft-play-icon w-7 h-7 text-purple-600"
-                          aria-hidden="true"
-                        >
-                          <path
-                            d="M10.5 7.2c0-.9.9-1.5 1.7-1.05l6.8 4.05c.8.48.8 1.62 0 2.1l-6.8 4.05c-.8.48-1.7-.15-1.7-1.05V7.2Z"
-                            fill="currentColor"
-                          />
-                        </svg>
-                      </span>
-                      <span className="md:whitespace-nowrap">
-                        YouTube Channel
-                      </span>
-                    </Button>
-                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div className="relative rounded-lg bg-[linear-gradient(145deg,#fff_0%,#ffe7f6_40%,#d8c3ff_100%)] p-4 shadow-[0_24px_70px_-36px_rgba(88,28,135,0.55)]">
+              <div className="absolute inset-0 rounded-lg bg-[radial-gradient(circle_at_20%_20%,rgba(255,255,255,0.75),transparent_28%),radial-gradient(circle_at_80%_28%,rgba(236,72,153,0.20),transparent_30%)]" />
+              <div className="relative rounded-lg border border-white/70 bg-white/50 p-4 backdrop-blur">
+                <Image
+                  src="/laptop.png"
+                  alt="Laptop with code"
+                  width={760}
+                  height={560}
+                  className="mx-auto h-auto w-full"
+                  priority
+                />
+              </div>
+              <div className="relative mt-4 grid grid-cols-2 gap-3">
+                <div className="rounded-lg bg-purple-950 p-4 text-white">
+                  <p className="text-xs uppercase tracking-[0.18em] text-pink-200">
+                    Next cohort
+                  </p>
+                  <p className="mt-2 text-2xl font-bold">June 2026</p>
+                </div>
+                <div className="rounded-lg border border-white/70 bg-white/70 p-4 text-purple-950">
+                  <p className="text-xs uppercase tracking-[0.18em] text-purple-700/70">
+                    Focus
+                  </p>
+                  <p className="mt-2 text-2xl font-bold">AI + Web Dev</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
-      <LearningPromiseSection />
-      <FeaturesSection />
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.5 }}
-        className="mt-32 max-w-3xl text-center"
-      >
-        <h2 className="text-3xl font-bold text-purple-900 mb-4">
-          Coming Soon: Digital Products
-        </h2>
-        <p className="text-gray-700 mb-6">
-          Stay tuned for beginner-friendly guides and resources launching in
-          January 2026.
-        </p>
-        <Button
-          size="lg"
-          className="bg-purple-600 hover:bg-purple-700 text-white rounded-2xl shadow-md"
-        >
-          Notify Me
-        </Button>
-      </motion.div>
-      <FooterSection />
-    </div>
+
+      <section className="mx-auto max-w-7xl px-5 py-14 sm:px-8 lg:px-10">
+        <div className="grid gap-5 lg:grid-cols-[0.95fr_1.05fr]">
+          <div className="rounded-lg bg-purple-950 p-6 text-white shadow-sm sm:p-8">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-pink-200">
+              GlitterNGeek on YouTube
+            </p>
+            <h2 className="mt-4 font-display text-4xl font-semibold leading-tight sm:text-5xl">
+              Free lessons that make coding feel approachable.
+            </h2>
+            <p className="mt-5 max-w-xl leading-7 text-pink-50/75">
+              Watch beginner tutorials, AI walkthroughs, and soft-tech build
+              sessions designed to help you keep going.
+            </p>
+            <a
+              href={youtubeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-7 inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-pink-400 px-5 text-sm font-bold text-purple-950 transition hover:bg-pink-300"
+            >
+              Visit the channel <ArrowRight className="h-4 w-4" />
+            </a>
+          </div>
+          <div className="grid gap-5 sm:grid-cols-3">
+            {homepageHighlights.map((item) => (
+              <div
+                key={item.label}
+                className="rounded-lg border border-purple-100 bg-white p-5 shadow-sm"
+              >
+                <item.icon className="h-5 w-5 text-pink-500" />
+                <h3 className="mt-4 text-lg font-bold text-purple-950">
+                  {item.label}
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-slate-600">
+                  {item.copy}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 pb-10 sm:px-8 lg:px-10">
+        <div className="grid overflow-hidden rounded-lg border border-purple-100 bg-white shadow-sm lg:grid-cols-[0.95fr_1.05fr]">
+          <div className="p-6 sm:p-8 lg:p-10">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-pink-500">
+              Digital products
+            </p>
+            <h2 className="mt-4 font-display text-4xl font-semibold leading-tight text-purple-950 sm:text-5xl">
+              Templates, guides, and beginner-friendly resources are coming.
+            </h2>
+            <p className="mt-5 max-w-2xl leading-7 text-slate-600">
+              The next phase of GNG will turn lessons into practical resources
+              you can reuse while building websites, planning content, and
+              learning AI-assisted workflows.
+            </p>
+            <Link
+              href="/courses"
+              className="mt-7 inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-purple-800 px-5 text-sm font-bold text-white transition hover:bg-purple-900"
+            >
+              Explore courses <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+          <div className="relative min-h-[360px] bg-[#f7e7ff]">
+            <SoftMascot className="absolute bottom-0 left-1/2 h-[340px] -translate-x-1/2 sm:h-[420px]" />
+          </div>
+        </div>
+        <GngFooter />
+      </section>
+    </main>
   );
 }
