@@ -33,7 +33,7 @@ export function SiteNav() {
           <ul className="flex items-center gap-6 text-md font-medium tracking-wide absolute left-2 sm:left-4 lg:left-6 transition-all duration-500 ease-out opacity-0 -translate-y-1 scale-95 pointer-events-none min-[840px]:opacity-100 min-[840px]:translate-y-0 min-[840px]:scale-100 min-[840px]:pointer-events-auto">
             <li>
               <a
-                href="#courses"
+                href="/courses"
                 className="text-purple-800 hover:text-pink-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-400 rounded-sm px-1 py-1"
               >
                 Courses
@@ -41,7 +41,7 @@ export function SiteNav() {
             </li>
             <li>
               <a
-                href="#about"
+                href="/about"
                 className="text-purple-800 hover:text-pink-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-400 rounded-sm px-1 py-1"
               >
                 About
@@ -83,7 +83,7 @@ export function SiteNav() {
                 <ul className="py-2">
                   <li>
                     <a
-                      href="#courses"
+                      href="/courses"
                       role="menuitem"
                       className="block px-4 py-2.5 text-purple-800 hover:bg-pink-50 hover:text-pink-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-400"
                       onClick={() => setMobileOpen(false)}
@@ -93,7 +93,7 @@ export function SiteNav() {
                   </li>
                   <li>
                     <a
-                      href="#about"
+                      href="/about"
                       role="menuitem"
                       className="block px-4 py-2.5 text-purple-800 hover:bg-pink-50 hover:text-pink-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-400"
                       onClick={() => setMobileOpen(false)}
