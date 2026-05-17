@@ -38,8 +38,8 @@ export function FooterSection() {
                     <nav aria-labelledby="footer-learn-heading" className="mx-auto md:mx-0">
                         <h3 id="footer-learn-heading" className="font-semibold uppercase tracking-wider text-pink-100 mb-3 text-xs">Learn More</h3>
                         <ul className="space-y-2">
-                        <li><a href="#about" className={linkStyling}>About</a></li>
-                        <li><a href="#courses" className={linkStyling}>Courses</a></li>
+                        <li><a href="/about" className={linkStyling}>About</a></li>
+                        <li><a href="/courses" className={linkStyling}>Courses</a></li>
                         </ul>
                     </nav>
                     <nav aria-labelledby="footer-follow-heading" className="mx-auto md:mx-0">
