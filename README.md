@@ -1,10 +1,10 @@
-## GLITTERNGEEK.DEV.
+## GLITTERNGEEK.DEV
 ---
 
 ## ✨ What This Is
-An evolving Next.js (App Router) site that powers the GlitterNGeek learning hub: animated ambient gradient hero, mascot (floating doggo), feature pillars, newsletter capture, and an accessible, performance‑aware component system built with a soft aesthetic.
+An evolving Next.js (App Router) site that powers the GlitterNGeek.Dev's learning academy hub: animated ambient gradient hero, mascot (floating doggo), feature pillars, newsletter capture, and an accessible, performance‑aware component system built with a soft aesthetic.
 
-## 🧱 Tech Stack (Calm, Modern, Minimal)
+## 🧱 Tech Stack
 - **Framework:** Next.js 15 (App Router) + Turbopack dev server
 - **Language:** TypeScript (strict where it matters, ergonomic elsewhere)
 - **Styling:** Tailwind CSS v4 with a custom plugin (encapsulates base fonts, animated scrollbar, blob cards, text glow utilities)
@@ -42,7 +42,7 @@ Useful script notes:
 - `build` -> production bundle (`.next/` with tracing/analysis artifacts).
 - `lint` → ESLint (Next.js config) across `src/`.
 
-## 🧩 Key Components (Tour)
+## 🧩 Key Components
 | Component | Purpose | Notes |
 |-----------|---------|-------|
 | `GradientBackground` | Layered pastel gradient + optional hue drift & cotton candy texture | All CSS; no runtime canvas cost |
@@ -91,7 +91,7 @@ Add a fourth feature card:
 ## 🔐 Environment / Secrets
 Currently no server-side secrets committed. If adding API routes or server actions, prefer environment variables (`process.env.MY_KEY`) and never commit them.
 
-## 🗺 Roadmap (Snapshot)
+## 🗺 Roadmap Snapshot
 - [ ] Launch initial blog / articles (MDX pipeline)
 - [ ] Course landing pages (prerelease signups)
 - [ ] Dark / vibrant theme toggle (switching gradient variant)
@@ -104,7 +104,7 @@ Lightweight for now:
 1. Fork & branch (`feature/your-idea`)
 2. Keep PRs focused (UI, copy, or infra — pick one)
 3. Ensure lint passes: `npm run lint`
-4. Describe the vibe impact (performance, accessibility, delight)
+4. Describe the vibe impact (performance, accessibility, delight💕)
 
 ## 📦 Deployment
 Optimized for Vercel (edge-ready, Next.js 15). A standard `vercel` deploy runs `npm install && npm run build`.
@@ -113,6 +113,6 @@ Optimized for Vercel (edge-ready, Next.js 15). A standard `vercel` deploy runs `
 Copyright © GlitterNGeek, LLC. All rights reserved. Unless explicitly stated, code examples are not open‑licensed for commercial reuse.
 
 ## 💌 Stay in the Loop
-Subscribe via the in-site form or follow on YouTube for course launch updates (March 2026 target).
+Subscribe via the in-site form or follow on YouTube for course launch updates (June 2026 target).
 
 — Learn Tech. Live Soft. Repeat.
