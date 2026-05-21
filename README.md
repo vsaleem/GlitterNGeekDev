@@ -1,4 +1,10 @@
 ## GLITTERNGEEK.DEV
+
+<a href="#"><img align="right" src="./tmpl/assets/banner.png" alt="glitter-n-geek-dot-dev" title="glitter-n-geek-dot-dev" /></a>
+
+[![Build Status](https://github.com/vsaleem/GlitterNGeekDev/actions/workflows/continuous-integration.yml/badge.svg?branch=main)](https://github.com/vsaleem/GlitterNGeekDev/actions/workflows/continuous-integration.yml?query=branch%3Amain)
+[![Last Commit](https://img.shields.io/github/last-commit/vsaleem/GlitterNGeekDev)](https://github.com/vsaleem/GlitterNGeekDev/commits/main)
+
 ---
 
 ## ✨ What This Is
