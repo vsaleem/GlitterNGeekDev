@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, DynaPuff, Quicksand } from "next/font/google";
-// import "./globals.css";
+import "./globals.css";
 import { DARK_MODE_MEDIA } from "@/util/constants";
 import FloatingLogo from "@/components/FloatingLogo";
 import DevOverlayHider from "@/components/DevOverlayHider";
