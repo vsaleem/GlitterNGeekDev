@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, DynaPuff, Quicksand } from "next/font/google";
-import "./globals.css";
+// import "./globals.css";
 import { DARK_MODE_MEDIA } from "@/util/constants";
 import FloatingLogo from "@/components/FloatingLogo";
 import DevOverlayHider from "@/components/DevOverlayHider";
+import { Analytics } from "@vercel/analytics/next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -60,7 +61,9 @@ export default function RootLayout({
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${dynapuff.variable} ${quicksand.variable} ${quicksand.className}`}>
       <body className="antialiased font-body">
         {children}
-        {process.env.NODE_ENV === "development" && (
+          <Analytics />
+          
+          {process.env.NODE_ENV === "development" && (
           <>
             <DevOverlayHider />
             <FloatingLogo />
