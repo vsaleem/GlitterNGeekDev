@@ -46,7 +46,8 @@ const config: Config = {
     }
   },
   plugins: [
-    plugin(function ({ addUtilities, addComponents, addBase }) {
+    plugin(function ({ addUtilities, addBase }) {
+      // plugin(function ({ addUtilities, addComponents, addBase }) {
       // Base styles (variables + body + hiding dev toast + scrollbar + reduced motion overrides)
       addBase({
         ':root': {
@@ -118,91 +119,92 @@ const config: Config = {
         '.text-stroke-glow-pink': { '-webkit-text-stroke': '1px #ec4899', textShadow: '0 0 6px rgba(236,72,153,.55),0 0 14px rgba(236,72,153,.4)' },
       });
 
+      // To Update: Switch out addComponents with custom plugin API once available to support more complex patterns like this without needing to add wrapper divs in JSX
       // Components: fun shape card, youtube pill button, badge, play icon wrapper
-      addComponents({
-        '.fun-shape-card': {
-          position: 'relative',
-          background: '#fff',
-          borderRadius: '56% 44% 52% 48% / 50% 55% 45% 50%',
-          boxShadow: '0 8px 24px -6px rgba(149,76,233,.25),0 4px 12px -2px rgba(236,72,153,.15)',
-          transition: 'border-radius .8s ease,box-shadow .4s ease,transform .6s ease',
-          outline: 'none !important',
-        },
-        '.fun-shape-card:hover': {
-          borderRadius: '45% 55% 42% 58% / 55% 45% 50% 50%',
-          boxShadow: '0 10px 30px -4px rgba(139,92,246,.35),0 6px 16px -2px rgba(236,72,153,.22)'
-        },
-        '.fun-shape-card:focus': {
-          boxShadow: '0 10px 30px -4px rgba(139,92,246,.35),0 6px 16px -2px rgba(236,72,153,.22)'
-        },
-        '.fun-shape-card:focus-visible': {
-          boxShadow: '0 0 0 3px rgba(255,255,255,0.95),0 0 0 6px rgba(236,72,153,0.55),0 10px 30px -4px rgba(139,92,246,.35),0 6px 16px -2px rgba(236,72,153,.22)'
-        },
-        '.fun-shape-card::before': {
-          content: '""',
-          position: 'absolute',
-          inset: '0',
-          padding: '2px',
-          borderRadius: 'inherit',
-          background: 'linear-gradient(135deg,rgba(236,72,153,.9),rgba(139,92,246,.9),rgba(236,72,153,.9))',
-          WebkitMask: 'linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)',
-          mask: 'linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)',
-          WebkitMaskComposite: 'xor',
-          maskComposite: 'exclude',
-          pointerEvents: 'none',
-        },
-        '.fun-shape-card::after': {
-          content: '""',
-          position: 'absolute',
-          inset: '4% 6%',
-          borderRadius: 'inherit',
-          background: 'radial-gradient(circle at 30% 25%,rgba(236,72,153,.10),transparent 60%),radial-gradient(circle at 70% 70%,rgba(139,92,246,.10),transparent 65%)',
-          pointerEvents: 'none',
-        },
+      // addComponents({
+      //   '.fun-shape-card': {
+      //     position: 'relative',
+      //     background: '#fff',
+      //     borderRadius: '56% 44% 52% 48% / 50% 55% 45% 50%',
+      //     boxShadow: '0 8px 24px -6px rgba(149,76,233,.25),0 4px 12px -2px rgba(236,72,153,.15)',
+      //     transition: 'border-radius .8s ease,box-shadow .4s ease,transform .6s ease',
+      //     outline: 'none !important',
+      //   },
+      //   '.fun-shape-card:hover': {
+      //     borderRadius: '45% 55% 42% 58% / 55% 45% 50% 50%',
+      //     boxShadow: '0 10px 30px -4px rgba(139,92,246,.35),0 6px 16px -2px rgba(236,72,153,.22)'
+      //   },
+      //   '.fun-shape-card:focus': {
+      //     boxShadow: '0 10px 30px -4px rgba(139,92,246,.35),0 6px 16px -2px rgba(236,72,153,.22)'
+      //   },
+      //   '.fun-shape-card:focus-visible': {
+      //     boxShadow: '0 0 0 3px rgba(255,255,255,0.95),0 0 0 6px rgba(236,72,153,0.55),0 10px 30px -4px rgba(139,92,246,.35),0 6px 16px -2px rgba(236,72,153,.22)'
+      //   },
+      //   '.fun-shape-card::before': {
+      //     content: '""',
+      //     position: 'absolute',
+      //     inset: '0',
+      //     padding: '2px',
+      //     borderRadius: 'inherit',
+      //     background: 'linear-gradient(135deg,rgba(236,72,153,.9),rgba(139,92,246,.9),rgba(236,72,153,.9))',
+      //     WebkitMask: 'linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)',
+      //     mask: 'linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)',
+      //     WebkitMaskComposite: 'xor',
+      //     maskComposite: 'exclude',
+      //     pointerEvents: 'none',
+      //   },
+      //   '.fun-shape-card::after': {
+      //     content: '""',
+      //     position: 'absolute',
+      //     inset: '4% 6%',
+      //     borderRadius: 'inherit',
+      //     background: 'radial-gradient(circle at 30% 25%,rgba(236,72,153,.10),transparent 60%),radial-gradient(circle at 70% 70%,rgba(139,92,246,.10),transparent 65%)',
+      //     pointerEvents: 'none',
+      //   },
 
-        '.yt-pill-btn': { position: 'relative', overflow: 'hidden' },
-        '.yt-pill-btn::after': {
-          content: '""',
-          position: 'absolute',
-          inset: '0',
-          pointerEvents: 'none',
-          background: 'radial-gradient(circle at 30% 30%,rgba(236,72,153,.18),transparent 65%),radial-gradient(circle at 70% 70%,rgba(124,58,237,.15),transparent 70%)',
-          opacity: '0',
-          transition: 'opacity .4s ease'
-        },
-        '.yt-pill-btn:hover::after': { opacity: '1' },
-        '@media (max-width:767px)': {
-          '.yt-pill-btn': {
-            width: '220px',
-            borderWidth: '2px !important',
-            padding: '.9rem 1.4rem !important',
-            borderColor: '#7c3aed !important',
-            background: '#fff !important',
-            color: '#000 !important',
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '.55rem',
-            borderRadius: '9999px !important',
-            transition: 'width .5s ease,border-radius .5s ease,background .4s ease,box-shadow .4s ease',
-            boxShadow: '0 6px 18px -6px rgba(124,58,237,.25),0 4px 10px -4px rgba(236,72,153,.25)'
-          },
-          '.yt-pill-btn:active': { transform: 'scale(.95)' },
-          '.yt-pill-btn:focus-visible': { outline: '2px solid #7c3aed', outlineOffset: '4px' },
-        },
-        '@media (min-width:768px)': {
-          '.fun-shape-card': { borderRadius: '42% 58% 46% 54% / 60% 40% 52% 48%' },
-          '.yt-pill-btn': { borderRadius: '1.25rem' }
-        },
+      //   '.yt-pill-btn': { position: 'relative', overflow: 'hidden' },
+      //   '.yt-pill-btn::after': {
+      //     content: '""',
+      //     position: 'absolute',
+      //     inset: '0',
+      //     pointerEvents: 'none',
+      //     background: 'radial-gradient(circle at 30% 30%,rgba(236,72,153,.18),transparent 65%),radial-gradient(circle at 70% 70%,rgba(124,58,237,.15),transparent 70%)',
+      //     opacity: '0',
+      //     transition: 'opacity .4s ease'
+      //   },
+      //   '.yt-pill-btn:hover::after': { opacity: '1' },
+      //   '@media (max-width:767px)': {
+      //     '.yt-pill-btn': {
+      //       width: '220px',
+      //       borderWidth: '2px !important',
+      //       padding: '.9rem 1.4rem !important',
+      //       borderColor: '#7c3aed !important',
+      //       background: '#fff !important',
+      //       color: '#000 !important',
+      //       display: 'inline-flex',
+      //       alignItems: 'center',
+      //       justifyContent: 'center',
+      //       gap: '.55rem',
+      //       borderRadius: '9999px !important',
+      //       transition: 'width .5s ease,border-radius .5s ease,background .4s ease,box-shadow .4s ease',
+      //       boxShadow: '0 6px 18px -6px rgba(124,58,237,.25),0 4px 10px -4px rgba(236,72,153,.25)'
+      //     },
+      //     '.yt-pill-btn:active': { transform: 'scale(.95)' },
+      //     '.yt-pill-btn:focus-visible': { outline: '2px solid #7c3aed', outlineOffset: '4px' },
+      //   },
+      //   '@media (min-width:768px)': {
+      //     '.fun-shape-card': { borderRadius: '42% 58% 46% 54% / 60% 40% 52% 48%' },
+      //     '.yt-pill-btn': { borderRadius: '1.25rem' }
+      //   },
 
-        '.soft-play-icon': { transition: 'transform .35s ease', display: 'inline-block', willChange: 'transform', animation: 'softPulsePlay 2.4s ease-in-out infinite' },
-        '.yt-pill-btn:hover .soft-play-icon': { transform: 'scale(1.15)' },
-        '@media (prefers-reduced-motion: reduce)': {
-          '.badge-interact, .badge-interact::after': { animation: 'none !important', transition: 'none !important' },
-          '.soft-play-icon': { animation: 'none' },
-          '.fun-shape-card': { animation: 'none' }
-        },
-      });
+      //   '.soft-play-icon': { transition: 'transform .35s ease', display: 'inline-block', willChange: 'transform', animation: 'softPulsePlay 2.4s ease-in-out infinite' },
+      //   '.yt-pill-btn:hover .soft-play-icon': { transform: 'scale(1.15)' },
+      //   '@media (prefers-reduced-motion: reduce)': {
+      //     '.badge-interact, .badge-interact::after': { animation: 'none !important', transition: 'none !important' },
+      //     '.soft-play-icon': { animation: 'none' },
+      //     '.fun-shape-card': { animation: 'none' }
+      //   },
+      // });
     })
   ]
 };
