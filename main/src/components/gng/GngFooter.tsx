@@ -6,10 +6,14 @@ import { navLinks, youtubeUrl } from "./pageData";
 
 type GngFooterProps = {
   variant?: "light" | "dark";
+  isCoursesPageReleased?: boolean;
 };
 
-export function GngFooter({ variant = "light" }: GngFooterProps) {
+export function GngFooter({ variant = "light", isCoursesPageReleased }: GngFooterProps) {
   const isDark = variant === "dark";
+  const filteredNavLinks = navLinks.filter(
+    (link) => isCoursesPageReleased || link.href !== "/courses"
+  );
 
   return (
     <footer
@@ -37,7 +41,7 @@ export function GngFooter({ variant = "light" }: GngFooterProps) {
             builders who want to learn with clarity, confidence, and softness.
           </p>
           <div className="mt-6 flex flex-wrap gap-3 text-sm font-bold">
-            {navLinks.map((link) => (
+            {filteredNavLinks.map((link) => (
               <Link
                 href={link.href}
                 key={link.href}

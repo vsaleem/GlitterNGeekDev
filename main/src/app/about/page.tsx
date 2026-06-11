@@ -4,6 +4,7 @@ import GngFooter from "@/components/gng/GngFooter";
 import PageNav from "@/components/gng/PageNav";
 import SoftMascot from "@/components/gng/SoftMascot";
 import { learningPillars, youtubeUrl } from "@/components/gng/pageData";
+import { flags } from "@/config/flags";
 
 const values = [
   {
@@ -20,11 +21,13 @@ const values = [
   },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const isCoursesPageReleased = await flags.coursesPageReleaseProd;
+
   return (
     <main className="min-h-screen bg-[#fbf7ff] text-slate-950">
       <section className="mx-auto max-w-7xl px-5 py-6 sm:px-8 lg:px-10">
-        <PageNav />
+        <PageNav isCoursesPageReleased={isCoursesPageReleased} />
 
         <div className="mt-8 overflow-hidden rounded-lg border border-purple-100 bg-white shadow-sm">
           <div className="p-6 sm:p-8 lg:p-10">
@@ -37,12 +40,14 @@ export default function AboutPage() {
                   About GlitterNGeek
                 </h1>
               </div>
-              <Link
-                href="/courses"
-                className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-purple-800 px-4 text-sm font-bold text-white transition hover:bg-purple-900"
-              >
-                View courses <ArrowRight className="h-4 w-4" />
-              </Link>
+              {isCoursesPageReleased && (
+                <Link
+                  href="/courses"
+                  className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-purple-800 px-4 text-sm font-bold text-white transition hover:bg-purple-900"
+                >
+                  View courses <ArrowRight className="h-4 w-4" />
+                </Link>
+              )}
             </div>
 
             <div className="grid gap-5 py-8 xl:grid-cols-[minmax(0,1fr)_280px]">
@@ -133,24 +138,26 @@ export default function AboutPage() {
               ))}
             </div>
 
-            <div className="mt-5 rounded-lg bg-purple-950 p-6 text-white sm:p-8">
-              <div className="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-center">
-                <div>
-                  <p className="text-xs font-bold uppercase tracking-[0.2em] text-pink-200">
-                    Next step
-                  </p>
-                  <h2 className="mt-3 font-display text-4xl font-semibold leading-tight">
-                    Start with one lesson, then build momentum.
-                  </h2>
+              {isCoursesPageReleased && (
+                <div className="mt-5 rounded-lg bg-purple-950 p-6 text-white sm:p-8">
+                  <div className="grid gap-5 lg:grid-cols-[1fr_auto] lg:items-center">
+                    <div>
+                      <p className="text-xs font-bold uppercase tracking-[0.2em] text-pink-200">
+                        Next step
+                      </p>
+                      <h2 className="mt-3 font-display text-4xl font-semibold leading-tight">
+                        Start with one lesson, then build momentum.
+                      </h2>
+                    </div>
+                    <Link
+                      href="/courses"
+                      className="inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-pink-400 px-5 text-sm font-bold text-purple-950 transition hover:bg-pink-300"
+                    >
+                      Explore learning paths <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </div>
                 </div>
-                <Link
-                  href="/courses"
-                  className="inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-pink-400 px-5 text-sm font-bold text-purple-950 transition hover:bg-pink-300"
-                >
-                  Explore learning paths <ArrowRight className="h-4 w-4" />
-                </Link>
-              </div>
-            </div>
+              )}
           </div>
         </div>
 

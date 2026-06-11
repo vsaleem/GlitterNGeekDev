@@ -10,14 +10,17 @@ import {
   learningPillars,
   youtubeUrl,
 } from "@/components/gng/pageData";
+import { flags } from "@/config/flags";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const isCoursesPageReleased = await flags.coursesPageReleaseProd;
+
   return (
     <main className="min-h-screen overflow-hidden bg-[#fbf7ff] text-slate-900">
       <section className="relative">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_18%_20%,rgba(236,72,153,0.16),transparent_28%),radial-gradient(circle_at_82%_12%,rgba(139,92,246,0.14),transparent_30%),linear-gradient(135deg,#fff_0%,#fff4fb_46%,#efe6ff_100%)]" />
         <div className="mx-auto max-w-7xl px-5 py-6 sm:px-8 lg:px-10">
-          <PageNav />
+          <PageNav isCoursesPageReleased={flags.coursesPageReleaseProd} />
 
           <div className="grid min-h-[760px] grid-cols-1 items-center gap-10 py-14 lg:grid-cols-[1.02fr_0.98fr] lg:py-20">
             <div>
@@ -26,14 +29,14 @@ export default function HomePage() {
                 Soft life tech school
               </div>
               <h1 className="max-w-3xl font-display text-5xl font-semibold leading-[0.98] tracking-normal text-purple-950 sm:text-6xl lg:text-7xl">
-                Learn tech with calm, clarity, and a little glitter.
+                {isCoursesPageReleased ? "Learn tech with calm, clarity, and a little glitter." : "Coming soon."}
               </h1>
               <p className="mt-6 max-w-xl text-lg leading-8 text-slate-700">
                 Beginner-friendly web development and AI lessons for creative
                 builders who want structure, confidence, and community.
               </p>
               <div className="mt-8">
-                <CtaPair />
+                <CtaPair isCoursesPageReleased={flags.coursesPageReleaseProd} />
               </div>
 
               <div className="mt-10 grid gap-3 sm:grid-cols-3">
@@ -71,7 +74,7 @@ export default function HomePage() {
                   <p className="text-xs uppercase tracking-[0.18em] text-pink-200">
                     Next cohort
                   </p>
-                  <p className="mt-2 text-2xl font-bold">June 2026</p>
+                  <p className="mt-2 text-2xl font-bold">Sept 2026</p>
                 </div>
                 <div className="rounded-lg border border-white/70 bg-white/70 p-4 text-purple-950">
                   <p className="text-xs uppercase tracking-[0.18em] text-purple-700/70">
@@ -140,18 +143,20 @@ export default function HomePage() {
               you can reuse while building websites, planning content, and
               learning AI-assisted workflows.
             </p>
-            <Link
-              href="/courses"
-              className="mt-7 inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-purple-800 px-5 text-sm font-bold text-white transition hover:bg-purple-900"
-            >
-              Explore courses <ArrowRight className="h-4 w-4" />
-            </Link>
+            {isCoursesPageReleased && (
+              <Link
+                href="/courses"
+                className="mt-7 inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-purple-800 px-5 text-sm font-bold text-white transition hover:bg-purple-900"
+              >
+                Explore courses <ArrowRight className="h-4 w-4" />
+              </Link>
+            )}
           </div>
           <div className="relative min-h-[360px] bg-[#f7e7ff]">
             <SoftMascot className="absolute bottom-0 left-1/2 h-[340px] -translate-x-1/2 sm:h-[420px]" />
           </div>
         </div>
-        <GngFooter />
+        <GngFooter isCoursesPageReleased={flags.coursesPageReleaseProd} />
       </section>
     </main>
   );

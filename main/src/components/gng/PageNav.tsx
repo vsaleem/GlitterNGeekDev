@@ -4,10 +4,15 @@ import { navLinks } from "./pageData";
 
 type PageNavProps = {
   variant?: "light" | "dark" | "simple";
+   isCoursesPageReleased?: boolean; 
 };
 
-export function PageNav({ variant = "light" }: PageNavProps) {
+export function PageNav({ variant = "light", isCoursesPageReleased }: PageNavProps) {
   const isDark = variant === "dark";
+
+  const filteredNavLinks = navLinks.filter(
+    (link) => isCoursesPageReleased || link.href !== "/courses"
+  );
 
   return (
     <nav
@@ -44,7 +49,7 @@ export function PageNav({ variant = "light" }: PageNavProps) {
             : "border-purple-100 bg-white/75 text-purple-950 shadow-sm"
         }`}
       >
-        {navLinks.map((link) => (
+        {filteredNavLinks.map((link) => (
           <Link
             key={link.href}
             href={link.href}
