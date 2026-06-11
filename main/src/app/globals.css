@@ -1,4 +1,7 @@
+/* main/src/app/globals.css */
 @import "tailwindcss";
+/* @import "tailwindcss" source("../");
+@config "main/tailwind.config.ts";  */
 
 /* Minimal global overrides left intentionally blank as utilities & components moved into Tailwind plugin. */
 
