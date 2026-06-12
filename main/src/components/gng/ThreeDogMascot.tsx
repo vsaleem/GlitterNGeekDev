@@ -3,9 +3,6 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
-// import { UltraHDRLoader } from 'three/addons/loaders/UltraHDRLoader.js';
-// import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-
 type PartName =
   | "body"
   | "head"
@@ -79,10 +76,6 @@ function createBalloonMaterial(color: number) {
     metalness: 0.02,
     sheen: 0.35,
     sheenColor: new THREE.Color(0xffd7ee),
-    // type: 'HalfFloatType',
-    // exposure: 1.5,
-    // resolution: '2k',
-    // autoRotate: true,
   });
 }
 
