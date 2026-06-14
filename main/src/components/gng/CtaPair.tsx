@@ -4,9 +4,8 @@ import { youtubeUrl } from "./pageData";
 
 type CtaPairProps = {
   dark?: boolean;
-  isCoursesPageReleased?: boolean; // add this line
+  isCoursesPageReleased?: boolean;
 };
-// add flag isCoursesPageReleased to props and use it to conditionally render the cta text and styles
 
 export function CtaPair({ dark = false, isCoursesPageReleased }: CtaPairProps) {
   return (
