@@ -1,5 +1,4 @@
 "use client";
-import { Card, CardContent } from "@/components/ui/card";
 
 // Reusable feature card class helper
 const featureCardClass = (extra?: string) =>
@@ -33,27 +32,27 @@ export function FeaturesSection() {
     <section aria-labelledby="features-heading" className="mt-24 w-full flex flex-col items-center px-6">
       <h2 id="features-heading" className="sr-only">Core GlitterNGeek Learning Pillars</h2>
       <div className="grid md:grid-cols-3 gap-6 max-w-6xl w-full">
-        <Card className={featureCardClass()}>
+        <div className={featureCardClass()}>
           <span className={featureOverlayClass()} />
-          <CardContent className={featureCardContentClass()}>
+          <div className={featureCardContentClass()}>
             <h3 className="text-2xl font-bold text-purple-700 mb-6 tracking-tight">Tech Tutorials</h3>
             <p className="text-gray-600 text-lg leading-relaxed">Beginner-friendly coding and AI guides that make learning fun and approachable.</p>
-          </CardContent>
-        </Card>
-        <Card className={featureCardClass()}>
+          </div>
+        </div>
+        <div className={featureCardClass()}>
           <span className={featureOverlayClass()} />
-          <CardContent className={featureCardContentClass()}>
+          <div className={featureCardContentClass()}>
             <h3 className="text-2xl font-bold text-purple-700 mb-6 tracking-tight">Soft Life Energy</h3>
             <p className="text-gray-600 text-lg leading-relaxed">Gentle, aesthetic vibes to balance the challenges of coding with calm learning.</p>
-          </CardContent>
-        </Card>
-        <Card className={featureCardClass()}>
+          </div>
+        </div>
+        <div className={featureCardClass()}>
           <span className={featureOverlayClass()} />
-          <CardContent className={featureCardContentClass()}>
+          <div className={featureCardContentClass()}>
             <h3 className="text-2xl font-bold text-purple-700 mb-6 tracking-tight">Community</h3>
             <p className="text-gray-600 text-lg leading-relaxed">Learn in public, grow together, and connect with fellow Geeks on the journey.</p>
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </section>
   );
