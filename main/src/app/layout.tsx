@@ -5,6 +5,7 @@ import { DARK_MODE_MEDIA } from "@/util/constants";
 import FloatingLogo from "@/components/FloatingLogo";
 import DevOverlayHider from "@/components/DevOverlayHider";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -62,6 +63,7 @@ export default function RootLayout({
       <body className="antialiased font-body">
         {children}
           <Analytics />
+          <SpeedInsights />
           
           {process.env.NODE_ENV === "development" && (
           <>
