@@ -5,13 +5,25 @@
   "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
+    "dev:staging": "APP_ENV=staging next dev",
+    "dev:prod": "APP_ENV=production next dev",
     "build": "next build",
+    "build:dev": "APP_ENV=development next build",
+    "build:staging": "APP_ENV=staging next build",
+    "build:production": "APP_ENV=production next build",
     "start": "next start",
-    "lint": "next lint"
+    "start:prod": "APP_ENV=production next start",
+    "preview:prod": "npm run build:production && npm run start:prod",
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run lint && npm run typecheck && npm run build",
+    "security-check": "npm audit --audit-level=moderate"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.12.0",
     "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "clsx": "^2.1.1",
     "flags": "^4.1.0",
     "framer-motion": "^12.23.12",
