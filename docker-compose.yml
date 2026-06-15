@@ -1,0 +1,35 @@
+services:
+  app:
+    build:
+      context: ./main
+      dockerfile: Dockerfile
+      target: runner
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+
+  test:
+    build:
+      context: ./main
+      dockerfile: Dockerfile
+      target: deps
+    working_dir: /app
+    command: npm test
+    environment:
+      - NODE_ENV=test
+    volumes:
+      - ./main:/app
+      - /app/node_modules
+
+  e2e:
+    image: cypress/included:15.3.2
+    working_dir: /e2e
+    volumes:
+      - ./main:/e2e
+    environment:
+      - CYPRESS_baseUrl=http://app:3000
+    depends_on:
+      - app
+    command: cypress run

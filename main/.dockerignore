@@ -1,0 +1,13 @@
+node_modules
+.next
+.git
+*.log
+npm-debug.log*
+coverage
+cypress/screenshots
+cypress/videos
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
