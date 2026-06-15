@@ -7,6 +7,9 @@ on:
       - "**"
     tags-ignore:
       - "**"
+  pull_request:
+    branches:
+      - "**"
 
 permissions:
   contents: read
@@ -52,6 +55,58 @@ jobs:
               repo: context.repo.repo,
               run_id: context.runId
             });
+
+  lint-typecheck-build:
+    name: Lint, Typecheck, and Build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: main
+    steps:
+      - name: Checkout
+        uses: actions/checkout@cd7d8d697e10461458bc61a30d094dc601a8b017
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: main/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: main
+    steps:
+      - name: Checkout
+        uses: actions/checkout@cd7d8d697e10461458bc61a30d094dc601a8b017
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: main/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run unit tests
+        run: npm test
 
 # IN PROGRESS: This job is responsible for updating the merge status of the pull request in the stability review process. 
   # It will run after all the tests and checks have completed, regardless of their outcome, to ensure that the merge status is updated accordingly.
