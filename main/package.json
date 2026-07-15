@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "verify:native": "node scripts/check-native-deps.mjs",
     "predev": "npm run verify:native",
