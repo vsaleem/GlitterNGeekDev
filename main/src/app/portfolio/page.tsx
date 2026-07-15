@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import {
   ArrowRight,
   BadgeCheck,
@@ -15,6 +16,7 @@ import {
 } from "lucide-react";
 import GngFooter from "@/components/gng/GngFooter";
 import PageNav from "@/components/gng/PageNav";
+import { isPortfolioPageReleased } from "@/config/flags";
 
 const impactStats = [
   { value: "7M+", label: "users supported on VA.gov healthcare systems" },
@@ -85,6 +87,10 @@ const resumeLinks = [
 ];
 
 export default function PortfolioPage() {
+  if (!isPortfolioPageReleased()) {
+    notFound();
+  }
+
   return (
     <main className="min-h-screen overflow-hidden bg-[#fff3fb] text-slate-950">
       <section className="relative">

@@ -5,6 +5,7 @@ export const youtubeUrl =
 
 export const navLinks = [
   { href: "/", label: "Home" },
+  { href: "/products", label: "Products" },
   { href: "/courses", label: "Courses" },
   { href: "/about", label: "About" },
   { href: "/portfolio", label: "Portfolio" },
@@ -13,18 +14,18 @@ export const navLinks = [
 export const learningPillars = [
   {
     icon: Code2,
-    label: "Build",
-    copy: "HTML, CSS, JavaScript, React, and AI workflows taught in calm beginner steps.",
+    label: "See the idea",
+    copy: "Visual explanations and plain language make the invisible parts of tech easier to understand.",
   },
   {
     icon: BookOpenCheck,
-    label: "Practice",
-    copy: "Guided exercises, templates, and projects that make progress visible.",
+    label: "Try with guidance",
+    copy: "Guided exercises, templates, and review checks let you practice without wandering alone.",
   },
   {
     icon: Users,
-    label: "Grow",
-    copy: "A creator-led learning space that feels supportive without losing rigor.",
+    label: "Use it for real",
+    copy: "Every lesson connects to a useful project, decision, or workflow you can apply beyond the screen.",
   },
 ];
 

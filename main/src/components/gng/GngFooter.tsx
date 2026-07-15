@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import SubscribeSignup from "@/components/SubscribeSignup";
+import { isPortfolioPageReleased } from "@/config/flags";
 import { navLinks, youtubeUrl } from "./pageData";
 
 type GngFooterProps = {
@@ -11,16 +12,19 @@ type GngFooterProps = {
 
 export function GngFooter({ variant = "light", isCoursesPageReleased }: GngFooterProps) {
   const isDark = variant === "dark";
+  const portfolioIsReleased = isPortfolioPageReleased();
   const filteredNavLinks = navLinks.filter(
-    (link) => isCoursesPageReleased || link.href !== "/courses"
+    (link) =>
+      (isCoursesPageReleased || link.href !== "/courses") &&
+      (portfolioIsReleased || link.href !== "/portfolio"),
   );
 
   return (
     <footer
-      className={`mt-16 overflow-hidden rounded-lg ${
+      className={`mt-20 overflow-hidden rounded-[1.75rem] ${
         isDark
           ? "border border-white/12 bg-white/[0.06] text-white"
-          : "border border-purple-100 bg-white text-purple-950 shadow-sm"
+          : "border border-[#e6ddeb] bg-[#25143a] text-white shadow-[0_30px_70px_-50px_rgba(37,20,58,.9)]"
       }`}
     >
       <div className="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1.1fr_0.9fr] lg:p-10">
@@ -34,7 +38,7 @@ export function GngFooter({ variant = "light", isCoursesPageReleased }: GngFoote
           />
           <p
             className={`mt-5 max-w-xl text-base leading-7 ${
-              isDark ? "text-pink-50/72" : "text-slate-600"
+              isDark ? "text-pink-50/72" : "text-[#e9deef]"
             }`}
           >
             Beginner-friendly web development and AI education for creative
@@ -48,7 +52,7 @@ export function GngFooter({ variant = "light", isCoursesPageReleased }: GngFoote
                 className={`rounded-md px-3 py-2 transition ${
                   isDark
                     ? "bg-white/8 text-pink-50 hover:bg-white/12"
-                    : "bg-purple-50 text-purple-900 hover:bg-pink-50"
+                    : "bg-white/8 text-[#f8eefb] hover:bg-white/14"
                 }`}
               >
                 {link.label}
@@ -61,7 +65,7 @@ export function GngFooter({ variant = "light", isCoursesPageReleased }: GngFoote
               className={`inline-flex items-center gap-2 rounded-md px-3 py-2 transition ${
                 isDark
                   ? "bg-pink-400 text-purple-950 hover:bg-pink-300"
-                  : "bg-purple-800 text-white hover:bg-purple-900"
+                  : "bg-pink-400 text-[#25143a] hover:bg-pink-300"
               }`}
             >
               YouTube <ArrowRight className="h-4 w-4" />
@@ -72,10 +76,10 @@ export function GngFooter({ variant = "light", isCoursesPageReleased }: GngFoote
           className={`rounded-lg p-5 ${
             isDark
               ? "border border-white/12 bg-purple-950/45"
-              : "border border-purple-100 bg-[#fbf7ff]"
+              : "border border-white/12 bg-white/[0.07]"
           }`}
         >
-          <SubscribeSignup unstyled={isDark} />
+          <SubscribeSignup unstyled />
         </div>
       </div>
     </footer>

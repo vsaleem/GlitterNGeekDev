@@ -1,5 +1,11 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, DynaPuff, Quicksand } from "next/font/google";
+import {
+  DynaPuff,
+  Fraunces,
+  Geist,
+  Geist_Mono,
+  Quicksand,
+} from "next/font/google";
 import "./globals.css";
 import { DARK_MODE_MEDIA } from "@/util/constants";
 import FloatingLogo from "@/components/FloatingLogo";
@@ -18,9 +24,15 @@ const geistMono = Geist_Mono({
 });
 
 const dynapuff = DynaPuff({
-  variable: "--font-display",
+  variable: "--font-brand",
   subsets: ["latin"],
   weight: ["400","500","600","700"],
+});
+
+const fraunces = Fraunces({
+  variable: "--font-display",
+  subsets: ["latin"],
+  display: "swap",
 });
 
 const quicksand = Quicksand({
@@ -31,7 +43,8 @@ const quicksand = Quicksand({
 
 export const metadata: Metadata = {
   title: "GlitterNGeek",
-  description: "GlitterNGeek - Where Tech Meets Soft Life - Developer Profile",
+  description:
+    "Beginner-friendly AI and web learning that helps tech feel clear, useful, and human.",
   icons: {
     icon: [
       { url: "/icons/icon-16x16.png", sizes: "16x16", type: "image/png" },
@@ -50,7 +63,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#fbf8f3",
 };
 
 export default function RootLayout({
@@ -59,7 +72,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${dynapuff.variable} ${quicksand.variable} ${quicksand.className}`}>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${dynapuff.variable} ${fraunces.variable} ${quicksand.variable} ${quicksand.className}`}>
       <body className="antialiased font-body">
         {children}
           <Analytics />
