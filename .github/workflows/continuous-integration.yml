@@ -21,7 +21,7 @@ permissions:
 
 jobs:
 # TEMPORARY: This check will be removed once Shai Hulud 2.0 is no longer a moving target
-  # Fails and cancels the workflow if package.json or yarn.lock are modified
+  # Blocks dependency and lockfile changes while allowing non-dependency package scripts.
   check-dependency-files:
     name: Check for Dependency File Changes
     runs-on: ubuntu-latest
@@ -31,19 +31,46 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Check for package.json or yarn.lock changes
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: main/.nvmrc
+
+      - name: Check for dependency or lockfile changes
         run: |
-          # Fetch main branch for comparison
           git fetch origin main
 
-          # Check if package.json or yarn.lock have been modified
-          if git diff --name-only origin/main...HEAD | grep -qE '^(package\.json|yarn\.lock)$'; then
-            echo "❌ ERROR: package.json or yarn.lock has been modified."
-            echo "This is temporarily blocked to prevent Shai Hulud 2.0 vulnerabilities."
-            echo "Once Shai Hulud 2.0 is no longer a moving target, this check will be removed."
-            exit 1
+          if git diff --name-only origin/main...HEAD | grep -q '^main/package.json$'; then
+            git show origin/main:main/package.json > /tmp/package-main.json
+
+            for section in dependencies devDependencies optionalDependencies peerDependencies resolutions; do
+              if ! diff -u \
+                <(jq -S ".${section} // {}" /tmp/package-main.json) \
+                <(jq -S ".${section} // {}" main/package.json); then
+                echo "❌ ERROR: package.json dependency section '${section}' was modified."
+                exit 1
+              fi
+            done
+
+            expected_overrides='{"@istanbuljs/load-nyc-config":{"js-yaml":"3.15.0"},"next":{"postcss":"8.5.16"}}'
+            if [ "$(jq -cS '.overrides // {}' main/package.json)" != "$(printf '%s' "$expected_overrides" | jq -cS '.')" ]; then
+              echo "❌ ERROR: package.json overrides differ from the reviewed security allowlist."
+              exit 1
+            fi
           fi
-          echo "✓ No dependency file changes detected."
+
+          if git diff --name-only origin/main...HEAD | grep -qE '^main/(package-lock\.json|npm-shrinkwrap\.json|yarn\.lock)$'; then
+            cp main/package-lock.json /tmp/package-lock.committed.json
+            (
+              cd main
+              npm install --package-lock-only --ignore-scripts
+              diff -u /tmp/package-lock.committed.json package-lock.json
+              npm ci --ignore-scripts
+              npm audit --audit-level=moderate
+            )
+          fi
+
+          echo "✓ Dependency declarations, security overrides, and lockfiles passed policy."
 
       - name: Cancel workflow on failure
         if: failure()
@@ -69,7 +96,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version-file: main/.nvmrc
           cache: npm
           cache-dependency-path: main/package-lock.json
 
@@ -98,7 +125,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version-file: main/.nvmrc
           cache: npm
           cache-dependency-path: main/package-lock.json
 

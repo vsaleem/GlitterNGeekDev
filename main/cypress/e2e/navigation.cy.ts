@@ -6,11 +6,9 @@ describe("Site navigation", () => {
     cy.get("h1").should("be.visible");
   });
 
-  it("navigates from Home to Portfolio", () => {
+  it("hides Portfolio navigation in production", () => {
     cy.visit("/");
-    cy.contains("a", "Portfolio").click();
-    cy.url().should("include", "/portfolio");
-    cy.get("h1").should("be.visible");
+    cy.contains("a", "Portfolio").should("not.exist");
   });
 
   it("navigates from About back to Home", () => {

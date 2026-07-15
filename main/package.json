@@ -4,19 +4,28 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "verify:native": "node scripts/check-native-deps.mjs",
+    "predev": "npm run verify:native",
     "dev": "next dev --turbopack",
+    "predev:staging": "npm run verify:native",
     "dev:staging": "APP_ENV=staging next dev",
+    "predev:prod": "npm run verify:native",
     "dev:prod": "APP_ENV=production next dev",
+    "prebuild": "npm run verify:native",
     "build": "next build",
+    "prebuild:dev": "npm run verify:native",
     "build:dev": "APP_ENV=development next build",
+    "prebuild:staging": "npm run verify:native",
     "build:staging": "APP_ENV=staging next build",
+    "prebuild:production": "npm run verify:native",
     "build:production": "APP_ENV=production next build",
     "start": "next start",
     "start:prod": "APP_ENV=production next start",
     "preview:prod": "npm run build:production && npm run start:prod",
-    "lint": "next lint",
-    "lint:fix": "next lint --fix",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "typecheck": "tsc --noEmit",
+    "pretest": "npm run verify:native",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
@@ -57,5 +66,13 @@
     "tailwindcss": "^4",
     "ts-node": "^10.9.2",
     "typescript": "^5"
+  },
+  "overrides": {
+    "next": {
+      "postcss": "8.5.16"
+    },
+    "@istanbuljs/load-nyc-config": {
+      "js-yaml": "3.15.0"
+    }
   }
 }

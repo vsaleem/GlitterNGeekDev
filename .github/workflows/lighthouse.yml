@@ -25,7 +25,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version-file: main/.nvmrc
           cache: npm
           cache-dependency-path: main/package-lock.json
 

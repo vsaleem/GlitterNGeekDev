@@ -3,9 +3,135 @@
 /* @import "tailwindcss" source("../");
 @config "main/tailwind.config.ts";  */
 
-/* Minimal global overrides left intentionally blank as utilities & components moved into Tailwind plugin. */
+:root {
+	--gng-cream: #fbf8f3;
+	--gng-paper: #fffdf9;
+	--gng-ink: #25143a;
+	--gng-muted: #655b70;
+	--gng-violet: #6d28d9;
+	--gng-violet-dark: #4c1d95;
+	--gng-pink: #ec4899;
+	--gng-lilac: #eadcff;
+	--gng-mint: #b7f7d4;
+	--gng-line: #e6ddeb;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	background: var(--gng-cream);
+	color: var(--gng-ink);
+}
+
+::selection {
+	background: #f9a8d4;
+	color: var(--gng-ink);
+}
 
 @layer components {
+	.gng-shell {
+		background:
+			radial-gradient(circle at 4% 5%, rgba(236, 72, 153, .10), transparent 22rem),
+			radial-gradient(circle at 96% 11%, rgba(109, 40, 217, .09), transparent 24rem),
+			var(--gng-cream);
+		color: var(--gng-ink);
+	}
+
+	.gng-kicker {
+		display: inline-flex;
+		align-items: center;
+		gap: .5rem;
+		border: 1px solid rgba(109, 40, 217, .18);
+		border-radius: 999px;
+		background: rgba(255, 253, 249, .82);
+		padding: .45rem .75rem;
+		font-size: .72rem;
+		font-weight: 700;
+		letter-spacing: .14em;
+		text-transform: uppercase;
+		color: var(--gng-violet-dark);
+		box-shadow: 0 12px 30px -24px rgba(37, 20, 58, .65);
+	}
+
+	.gng-panel {
+		border: 1px solid var(--gng-line);
+		border-radius: 1.5rem;
+		background: rgba(255, 253, 249, .92);
+		box-shadow: 0 28px 70px -52px rgba(37, 20, 58, .72);
+	}
+
+	.gng-button-primary,
+	.gng-button-secondary {
+		display: inline-flex;
+		min-height: 3rem;
+		align-items: center;
+		justify-content: center;
+		gap: .5rem;
+		border-radius: .85rem;
+		padding: .75rem 1.15rem;
+		font-size: .875rem;
+		font-weight: 700;
+		transition: transform .2s ease, background-color .2s ease, border-color .2s ease, box-shadow .2s ease;
+	}
+
+	.gng-button-primary {
+		background: var(--gng-violet);
+		color: white;
+		box-shadow: 0 16px 28px -18px rgba(109, 40, 217, .9);
+	}
+
+	.gng-button-secondary {
+		border: 1px solid rgba(109, 40, 217, .22);
+		background: rgba(255, 253, 249, .84);
+		color: var(--gng-ink);
+	}
+
+	.gng-button-primary:hover,
+	.gng-button-secondary:hover {
+		transform: translateY(-2px);
+	}
+
+	.gng-button-primary:hover {
+		background: var(--gng-violet-dark);
+	}
+
+	.gng-button-secondary:hover {
+		border-color: rgba(236, 72, 153, .42);
+		background: #fff7fb;
+	}
+
+	.gng-button-primary:focus-visible,
+	.gng-button-secondary:focus-visible {
+		outline: 3px solid rgba(236, 72, 153, .42);
+		outline-offset: 3px;
+	}
+
+	.glitch-grid {
+		background-image:
+			linear-gradient(rgba(109, 40, 217, .055) 1px, transparent 1px),
+			linear-gradient(90deg, rgba(109, 40, 217, .055) 1px, transparent 1px);
+		background-size: 28px 28px;
+	}
+
+	.debug-pulse {
+		animation: debugPulse 2.8s ease-in-out infinite;
+	}
+
+	@keyframes debugPulse {
+		0%, 100% { transform: scaleX(.48); opacity: .72; }
+		50% { transform: scaleX(1); opacity: 1; }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		html { scroll-behavior: auto; }
+		.gng-button-primary,
+		.gng-button-secondary { transition: none; }
+		.gng-button-primary:hover,
+		.gng-button-secondary:hover { transform: none; }
+		.debug-pulse { animation: none; transform: scaleX(1); }
+	}
 	.fun-shape-card {
 		position: relative;
 		background: #fff;
