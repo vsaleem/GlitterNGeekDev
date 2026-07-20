@@ -9,6 +9,7 @@ export const navLinks = [
   { href: "/courses", label: "Courses" },
   { href: "/about", label: "About" },
   { href: "/portfolio", label: "Portfolio" },
+  { href: "/book", label: "Book a call" },
 ];
 
 export const learningPillars = [
