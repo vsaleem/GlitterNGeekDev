@@ -80,14 +80,23 @@ jobs:
               npm ci --ignore-scripts
               npm audit --json > /tmp/audit-head.json || true
             )
+            if ! jq -e '.vulnerabilities | type == "object"' /tmp/audit-head.json >/dev/null; then
+              echo "❌ ERROR: npm returned an invalid audit response for the proposed lockfile."
+              exit 1
+            fi
 
             mkdir -p /tmp/audit-baseline
             git show origin/main:main/package.json > /tmp/audit-baseline/package.json
             git show origin/main:main/package-lock.json > /tmp/audit-baseline/package-lock.json
             (
               cd /tmp/audit-baseline
+              npm ci --ignore-scripts
               npm audit --json > /tmp/audit-baseline.json || true
             )
+            if ! jq -e '.vulnerabilities | type == "object"' /tmp/audit-baseline.json >/dev/null; then
+              echo "❌ ERROR: npm returned an invalid audit response for the baseline lockfile."
+              exit 1
+            fi
 
             jq -r '
               [.vulnerabilities[].via[]?
