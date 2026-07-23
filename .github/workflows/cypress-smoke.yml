@@ -15,6 +15,12 @@ jobs:
   cypress-smoke:
     name: Cypress Smoke Tests
     runs-on: ubuntu-latest
+    env:
+      GNG_LEARNING_APP_ENABLED: "true"
+      GNG_LEARNING_DEV_ACCESS: "true"
+      GNG_LEARNING_DEV_EMAIL: victoria@example.com
+      GNG_LEARNING_DEV_NAME: Victoria
+      GNG_LEARNING_DEV_ENTITLEMENTS: quick-start
     defaults:
       run:
         working-directory: main
@@ -39,11 +45,10 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           working-directory: main
-          start: npm start
+          start: npm run dev
           wait-on: "http://localhost:3000"
           wait-on-timeout: 60
           browser: chrome
-          headless: true
 
       - name: Upload Cypress screenshots on failure
         if: failure()
