@@ -80,10 +80,11 @@ export default async function SmallBusinessAiToolkitPage() {
                 Standalone digital Toolkit
               </p>
               <p className="mt-3 font-display text-3xl font-semibold text-[#25143a]">
-                {priceDisplay ?? "Launch price pending"}
+                {priceDisplay ?? "$49.00"}
               </p>
               <p className="mt-3 text-sm leading-6 text-[#655b70]">
-                One purchase. No subscription required.
+                One intentional purchase. No subscription, renewal, or
+                automatic follow-on charge.
               </p>
 
               {checkout.enabled ? (
@@ -97,7 +98,8 @@ export default async function SmallBusinessAiToolkitPage() {
                 <div className="mt-6 rounded-xl border border-violet-200 bg-violet-50 p-4">
                   <p className="font-bold text-[#25143a]">Checkout opens soon.</p>
                   <p className="mt-1 text-sm leading-6 text-[#655b70]">
-                    Final pricing and delivery checks are being completed before purchases open.
+                    Secure payment and delivery checks are being completed
+                    before purchases open.
                   </p>
                 </div>
               )}

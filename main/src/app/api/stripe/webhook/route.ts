@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { fulfillPaidToolkitOrder } from "@/commerce/fulfillment";
 import { verifyAndParseStripeEvent } from "@/commerce/stripe";
 
 export const runtime = "nodejs";
@@ -19,12 +20,30 @@ export async function POST(request: NextRequest) {
     const event = verifyAndParseStripeEvent(rawBody, signature);
 
     if (PAYMENT_EVENTS.has(event.type)) {
-      // V1 uses an explicitly approved manual fulfillment queue. Keep this log
-      // free of customer data; the Stripe Dashboard remains the order record.
-      console.info("Paid GNG order requires fulfillment", {
+      const result = await fulfillPaidToolkitOrder(event);
+      if (result.status === "unavailable") {
+        console.error("Paid GNG order could not be fulfilled", {
+          eventId: event.id,
+          checkoutSessionId: event.data.object.id,
+          reason: result.reason,
+        });
+        return NextResponse.json(
+          { error: "Fulfillment is temporarily unavailable." },
+          { status: 503 },
+        );
+      }
+      if (result.status === "rejected") {
+        console.warn("Paid GNG order failed validation", {
+          eventId: event.id,
+          checkoutSessionId: event.data.object.id,
+          reason: result.reason,
+        });
+        return NextResponse.json({ received: true, fulfilled: false });
+      }
+      console.info("Paid GNG order processed", {
         eventId: event.id,
         checkoutSessionId: event.data.object.id,
-        product: event.data.object.metadata?.product_slug ?? "unknown",
+        fulfillment: result.status,
       });
     }
 
@@ -36,4 +55,3 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid signature." }, { status: 400 });
   }
 }
-

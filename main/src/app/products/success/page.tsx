@@ -36,14 +36,14 @@ export default async function SuccessPage({ searchParams }: SuccessPageProps) {
         </h1>
         <p className="mx-auto mt-4 max-w-xl leading-7 text-[#655b70]">
           {paid
-            ? "Thank you for your purchase. Your receipt and delivery instructions will be sent to the email used at checkout."
+            ? "Thank you for your purchase. Your receipt will be sent to the verified email used at checkout. Toolkit access may take a moment to appear."
             : "Some payment methods take longer to confirm. Watch the email used at checkout for your receipt and next steps."}
         </p>
         <Link
-          href="/products"
+          href={paid ? "/learn" : "/products"}
           className="gng-button-primary mt-7"
         >
-          Return to GNG products
+          {paid ? "Open customer library" : "Return to GNG products"}
         </Link>
       </div>
     </main>

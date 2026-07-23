@@ -4,6 +4,7 @@ import {
   createCheckoutSession,
   getCheckoutReadiness,
 } from "@/commerce/stripe";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export const runtime = "nodejs";
 
@@ -32,9 +33,24 @@ export async function POST(request: NextRequest) {
   }
 
   try {
+    const supabase = await createSupabaseServerClient();
+    const {
+      data: { user },
+    } = supabase
+      ? await supabase.auth.getUser()
+      : { data: { user: null } };
+    if (!user?.id || !user.email || !user.email_confirmed_at) {
+      return NextResponse.redirect(
+        new URL("/learn/sign-in", request.nextUrl.origin),
+        303,
+      );
+    }
+
     const session = await createCheckoutSession({
       productSlug: product.slug,
       siteUrl: getSiteUrl(request),
+      userId: user.id,
+      customerEmail: user.email,
     });
     if (!session.url) throw new Error("Stripe did not return a checkout URL.");
     return NextResponse.redirect(session.url, 303);
@@ -49,4 +65,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-

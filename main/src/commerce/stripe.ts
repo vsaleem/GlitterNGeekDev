@@ -4,15 +4,19 @@ import type { ProductSlug } from "./products";
 const STRIPE_API_BASE = "https://api.stripe.com/v1";
 const STRIPE_SIGNATURE_TOLERANCE_SECONDS = 300;
 
-type StripeCheckoutSession = {
+export type StripeCheckoutSession = {
   id: string;
   url?: string | null;
   payment_status?: "paid" | "unpaid" | "no_payment_required";
   customer_details?: { email?: string | null } | null;
   metadata?: Record<string, string> | null;
+  client_reference_id?: string | null;
+  payment_intent?: string | { id: string } | null;
+  amount_total?: number | null;
+  currency?: string | null;
 };
 
-type StripeEvent = {
+export type StripeEvent = {
   id: string;
   type: string;
   data: { object: StripeCheckoutSession };
@@ -34,6 +38,12 @@ export function getCheckoutReadiness(): CheckoutReadiness {
   if (process.env.GNG_CHECKOUT_ENABLED !== "true") {
     missing.push("GNG_CHECKOUT_ENABLED=true");
   }
+  if (process.env.GNG_LEARNING_APP_ENABLED !== "true") {
+    missing.push("GNG_LEARNING_APP_ENABLED=true");
+  }
+  if (!process.env.GNG_SITE_URL) {
+    missing.push("GNG_SITE_URL");
+  }
   if (!process.env.STRIPE_SECRET_KEY) {
     missing.push("STRIPE_SECRET_KEY");
   }
@@ -43,8 +53,20 @@ export function getCheckoutReadiness(): CheckoutReadiness {
   if (!process.env.STRIPE_WEBHOOK_SECRET) {
     missing.push("STRIPE_WEBHOOK_SECRET");
   }
-  if (process.env.GNG_FULFILLMENT_MODE !== "manual") {
-    missing.push("GNG_FULFILLMENT_MODE=manual");
+  if (process.env.GNG_FULFILLMENT_MODE !== "entitlements") {
+    missing.push("GNG_FULFILLMENT_MODE=entitlements");
+  }
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+    missing.push("NEXT_PUBLIC_SUPABASE_URL");
+  }
+  if (
+    !process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY &&
+    !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  ) {
+    missing.push("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY");
+  }
+  if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    missing.push("SUPABASE_SERVICE_ROLE_KEY");
   }
 
   return { enabled: missing.length === 0, missing };
@@ -95,16 +117,24 @@ async function stripeRequest<T>(
 export async function createCheckoutSession(input: {
   productSlug: ProductSlug;
   siteUrl: string;
+  userId: string;
+  customerEmail: string;
 }): Promise<StripeCheckoutSession> {
+  const priceId = getPriceId(input.productSlug);
   const body = new URLSearchParams({
     mode: "payment",
-    "line_items[0][price]": getPriceId(input.productSlug),
+    "line_items[0][price]": priceId,
     "line_items[0][quantity]": "1",
     success_url: `${input.siteUrl}/products/success?session_id={CHECKOUT_SESSION_ID}`,
     cancel_url: `${input.siteUrl}/products/${input.productSlug}`,
     customer_creation: "always",
+    customer_email: input.customerEmail,
+    client_reference_id: input.userId,
     "metadata[product_slug]": input.productSlug,
+    "metadata[price_id]": priceId,
+    "metadata[supabase_user_id]": input.userId,
     "payment_intent_data[metadata][product_slug]": input.productSlug,
+    "payment_intent_data[metadata][supabase_user_id]": input.userId,
   });
 
   if (process.env.STRIPE_AUTOMATIC_TAX === "true") {

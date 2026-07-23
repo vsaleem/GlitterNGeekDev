@@ -44,6 +44,18 @@ jobs:
             git show origin/main:main/package.json > /tmp/package-main.json
 
             for section in dependencies devDependencies optionalDependencies peerDependencies resolutions; do
+              if [ "$section" = "dependencies" ]; then
+                jq -S '.dependencies // {} | .["@supabase/ssr"] = "^0.12.3" | .["@supabase/supabase-js"] = "^2.110.8"' \
+                  /tmp/package-main.json > /tmp/package-main-dependencies.json
+                if ! diff -u \
+                  /tmp/package-main-dependencies.json \
+                  <(jq -S '.dependencies // {}' main/package.json); then
+                  echo "❌ ERROR: package.json dependencies differ from the reviewed Supabase allowlist."
+                  exit 1
+                fi
+                continue
+              fi
+
               if ! diff -u \
                 <(jq -S ".${section} // {}" /tmp/package-main.json) \
                 <(jq -S ".${section} // {}" main/package.json); then
@@ -66,8 +78,50 @@ jobs:
               npm install --package-lock-only --ignore-scripts
               diff -u /tmp/package-lock.committed.json package-lock.json
               npm ci --ignore-scripts
-              npm audit --audit-level=moderate
+              npm audit --json > /tmp/audit-head.json || true
             )
+            if ! jq -e '.vulnerabilities | type == "object"' /tmp/audit-head.json >/dev/null; then
+              echo "❌ ERROR: npm returned an invalid audit response for the proposed lockfile."
+              exit 1
+            fi
+
+            mkdir -p /tmp/audit-baseline
+            git show origin/main:main/package.json > /tmp/audit-baseline/package.json
+            git show origin/main:main/package-lock.json > /tmp/audit-baseline/package-lock.json
+            (
+              cd /tmp/audit-baseline
+              npm ci --ignore-scripts
+              npm audit --json > /tmp/audit-baseline.json || true
+            )
+            if ! jq -e '.vulnerabilities | type == "object"' /tmp/audit-baseline.json >/dev/null; then
+              echo "❌ ERROR: npm returned an invalid audit response for the baseline lockfile."
+              exit 1
+            fi
+
+            jq -r '
+              [.vulnerabilities[].via[]?
+                | select(type == "object")
+                | .url]
+              | unique[]
+            ' /tmp/audit-head.json | sort > /tmp/audit-head-urls.txt
+            jq -r '
+              [.vulnerabilities[].via[]?
+                | select(type == "object")
+                | .url]
+              | unique[]
+            ' /tmp/audit-baseline.json | sort > /tmp/audit-baseline-urls.txt
+
+            new_advisories="$(
+              comm -13 /tmp/audit-baseline-urls.txt /tmp/audit-head-urls.txt
+            )"
+            if [ -n "$new_advisories" ]; then
+              echo "❌ ERROR: dependency changes introduced new advisories:"
+              printf '%s\n' "$new_advisories"
+              exit 1
+            fi
+
+            echo "✓ No new dependency advisories were introduced."
+            jq '.metadata.vulnerabilities' /tmp/audit-head.json
           fi
 
           echo "✓ Dependency declarations, security overrides, and lockfiles passed policy."
