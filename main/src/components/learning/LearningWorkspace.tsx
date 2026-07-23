@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   ArrowLeft,
   ArrowRight,
@@ -86,6 +87,7 @@ export default function LearningWorkspace({
   lesson,
   lessonIndex,
 }: Props) {
+  const router = useRouter();
   const {
     progress,
     ready,
@@ -362,7 +364,12 @@ export default function LearningWorkspace({
             aria-label="Choose lesson"
             value={lesson.id}
             onChange={(event) => {
-              window.location.href = `/learn/${product.id}/${event.target.value}`;
+              const selectedLesson = product.lessons.find(
+                (item) => item.id === event.target.value,
+              );
+              if (selectedLesson) {
+                router.push(`/learn/${product.id}/${selectedLesson.id}`);
+              }
             }}
           >
             {product.lessons.map((item, index) => (
