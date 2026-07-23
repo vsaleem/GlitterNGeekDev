@@ -1,18 +1,50 @@
-import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import type { LearningProductId } from "@/content/learning/curriculum";
+import { isProductionEnvironment } from "@/config/flags";
+import { createSupabaseServerClient } from "@/lib/supabase/server";
 import {
   hasLearningEntitlement,
-  LEARNING_SESSION_COOKIE,
+  isLearningAppEnabled,
   resolveLearningAccess,
   type LearningAccess,
 } from "./access";
+import { getLearningEntitlements } from "./entitlements";
 
 export async function getLearningAccess(): Promise<LearningAccess> {
-  const cookieStore = await cookies();
-  return resolveLearningAccess({
-    sessionToken: cookieStore.get(LEARNING_SESSION_COOKIE)?.value,
-  });
+  if (!isLearningAppEnabled()) return { status: "disabled" };
+
+  if (!isProductionEnvironment()) {
+    return resolveLearningAccess({});
+  }
+
+  const supabase = await createSupabaseServerClient();
+  if (!supabase) return { status: "signed-out" };
+
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+  if (error || !user?.email || !user.email_confirmed_at) {
+    return { status: "signed-out" };
+  }
+
+  const entitlementLookup = await getLearningEntitlements(supabase);
+  if (!entitlementLookup.ok) return { status: "signed-out" };
+
+  const displayName =
+    typeof user.user_metadata.full_name === "string"
+      ? user.user_metadata.full_name
+      : typeof user.user_metadata.name === "string"
+        ? user.user_metadata.name
+        : user.email.split("@")[0];
+
+  return {
+    status: "authenticated",
+    email: user.email.toLowerCase(),
+    name: displayName,
+    entitlements: entitlementLookup.entitlements,
+    isPreview: false,
+  };
 }
 
 export async function requireLearningAccess(

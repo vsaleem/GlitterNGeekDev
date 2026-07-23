@@ -29,6 +29,14 @@ export default async function NoLearningAccessPage({
             : "This learning area is not included with the verified email currently signed in."}
         </p>
         <div>
+          {isToolkit ? (
+            <Link
+              href="/products/small-business-ai-toolkit"
+              className="learn-purchase-button"
+            >
+              Purchase Toolkit - $49
+            </Link>
+          ) : null}
           <Link href="/learn" className="learn-primary-button">
             <ArrowLeft aria-hidden="true" />
             My Learning

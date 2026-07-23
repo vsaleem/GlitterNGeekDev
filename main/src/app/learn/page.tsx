@@ -18,7 +18,7 @@ export default async function LearningLibraryPage() {
       <footer className="learn-footer">
         <span>© 2026 GlitterNGeek.dev</span>
         <div>
-          <span>Policies publish before customer release</span>
+          <span>Private access · Human-reviewed learning</span>
           <a href="mailto:support@glitterngeek.dev">Contact support</a>
         </div>
       </footer>

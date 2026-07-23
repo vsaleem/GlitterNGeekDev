@@ -32,6 +32,7 @@ type LearningEnvironment = Partial<
     | "GNG_LEARNING_DEV_ACCESS"
     | "GNG_LEARNING_DEV_EMAIL"
     | "GNG_LEARNING_DEV_NAME"
+    | "GNG_LEARNING_DEV_ENTITLEMENTS"
     | "GNG_LEARNING_SESSION_SECRET"
   >
 >;
@@ -116,11 +117,21 @@ export function resolveLearningAccess(input: {
     !isProductionEnvironment(environment) &&
     environment.GNG_LEARNING_DEV_ACCESS === "true"
   ) {
+    const previewEntitlements = (
+      environment.GNG_LEARNING_DEV_ENTITLEMENTS ?? "quick-start"
+    )
+      .split(",")
+      .map((item) => item.trim())
+      .filter(
+        (item): item is LearningProductId =>
+          item === "quick-start" || item === "toolkit",
+      );
+
     return {
       status: "authenticated",
       email: environment.GNG_LEARNING_DEV_EMAIL ?? "victoria@example.com",
       name: environment.GNG_LEARNING_DEV_NAME ?? "Victoria",
-      entitlements: ["quick-start", "toolkit"],
+      entitlements: previewEntitlements,
       isPreview: true,
     };
   }
@@ -146,7 +157,6 @@ export function hasLearningEntitlement(
   product: LearningProductId,
 ): boolean {
   return (
-    access.status === "authenticated" &&
-    access.entitlements.includes(product)
+    access.status === "authenticated" && access.entitlements.includes(product)
   );
 }

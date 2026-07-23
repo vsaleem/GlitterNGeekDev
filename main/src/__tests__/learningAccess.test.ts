@@ -9,12 +9,12 @@ import {
 describe("learning application access", () => {
   it("keeps the application closed unless its server flag is enabled", () => {
     expect(isLearningAppEnabled({})).toBe(false);
-    expect(
-      isLearningAppEnabled({ GNG_LEARNING_APP_ENABLED: "false" }),
-    ).toBe(false);
-    expect(
-      isLearningAppEnabled({ GNG_LEARNING_APP_ENABLED: "true" }),
-    ).toBe(true);
+    expect(isLearningAppEnabled({ GNG_LEARNING_APP_ENABLED: "false" })).toBe(
+      false,
+    );
+    expect(isLearningAppEnabled({ GNG_LEARNING_APP_ENABLED: "true" })).toBe(
+      true,
+    );
   });
 
   it("allows explicit development preview access outside production", () => {
@@ -32,9 +32,25 @@ describe("learning application access", () => {
       status: "authenticated",
       email: "vic@example.com",
       name: "Vic",
-      entitlements: ["quick-start", "toolkit"],
+      entitlements: ["quick-start"],
       isPreview: true,
     });
+  });
+
+  it("can preview a purchased Toolkit with an explicit development entitlement", () => {
+    const access = resolveLearningAccess({
+      environment: {
+        NODE_ENV: "development",
+        GNG_LEARNING_APP_ENABLED: "true",
+        GNG_LEARNING_DEV_ACCESS: "true",
+        GNG_LEARNING_DEV_ENTITLEMENTS: "quick-start, toolkit",
+      },
+    });
+
+    expect(access.status).toBe("authenticated");
+    if (access.status === "authenticated") {
+      expect(access.entitlements).toEqual(["quick-start", "toolkit"]);
+    }
   });
 
   it("never honors the development bypass in production", () => {
