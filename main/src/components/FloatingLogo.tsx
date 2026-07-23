@@ -1,7 +1,11 @@
 "use client";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 export default function FloatingLogo() {
+  const pathname = usePathname();
+  if (pathname.startsWith("/learn")) return null;
+
   return (
     <a
       href="https://glitterngeek.dev"
