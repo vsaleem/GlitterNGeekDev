@@ -35,6 +35,7 @@ type LearningEnvironment = Partial<
     | "GNG_LEARNING_DEV_NAME"
     | "GNG_LEARNING_DEV_ENTITLEMENTS"
     | "GNG_LEARNING_SESSION_SECRET"
+    | "GITHUB_ACTIONS"
   >
 >;
 
@@ -115,7 +116,9 @@ export function resolveLearningAccess(input: {
   if (!isLearningAppEnabled(environment)) return { status: "disabled" };
 
   if (
-    (!isProductionEnvironment(environment) || environment.CI === "true") &&
+    (!isProductionEnvironment(environment) ||
+      ((environment.CI === "true" || environment.CI === "1") &&
+        environment.GITHUB_ACTIONS === "true")) &&
     environment.GNG_LEARNING_DEV_ACCESS === "true"
   ) {
     const previewEntitlements = (

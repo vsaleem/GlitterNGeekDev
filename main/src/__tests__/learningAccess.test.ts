@@ -68,7 +68,8 @@ describe("learning application access", () => {
   it("allows preview access in an explicit CI test environment", () => {
     const access = resolveLearningAccess({
       environment: {
-        CI: "true",
+        CI: "1",
+        GITHUB_ACTIONS: "true",
         NODE_ENV: "production",
         GNG_LEARNING_APP_ENABLED: "true",
         GNG_LEARNING_DEV_ACCESS: "true",
@@ -80,6 +81,19 @@ describe("learning application access", () => {
       expect(access.isPreview).toBe(true);
       expect(access.entitlements).toEqual(["quick-start"]);
     }
+  });
+
+  it("rejects generic production CI without the GitHub Actions marker", () => {
+    expect(
+      resolveLearningAccess({
+        environment: {
+          CI: "1",
+          NODE_ENV: "production",
+          GNG_LEARNING_APP_ENABLED: "true",
+          GNG_LEARNING_DEV_ACCESS: "true",
+        },
+      }),
+    ).toEqual({ status: "signed-out" });
   });
 
   it("verifies signed, expiring customer sessions", () => {
