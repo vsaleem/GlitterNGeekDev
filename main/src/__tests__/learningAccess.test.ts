@@ -53,7 +53,7 @@ describe("learning application access", () => {
     }
   });
 
-  it("never honors the development bypass in production", () => {
+  it("never honors the development bypass in normal production", () => {
     expect(
       resolveLearningAccess({
         environment: {
@@ -63,6 +63,23 @@ describe("learning application access", () => {
         },
       }),
     ).toEqual({ status: "signed-out" });
+  });
+
+  it("allows preview access in an explicit CI test environment", () => {
+    const access = resolveLearningAccess({
+      environment: {
+        CI: "true",
+        NODE_ENV: "production",
+        GNG_LEARNING_APP_ENABLED: "true",
+        GNG_LEARNING_DEV_ACCESS: "true",
+      },
+    });
+
+    expect(access.status).toBe("authenticated");
+    if (access.status === "authenticated") {
+      expect(access.isPreview).toBe(true);
+      expect(access.entitlements).toEqual(["quick-start"]);
+    }
   });
 
   it("verifies signed, expiring customer sessions", () => {

@@ -26,6 +26,7 @@ type LearningEnvironment = Partial<
   Pick<
     NodeJS.ProcessEnv,
     | "APP_ENV"
+    | "CI"
     | "NODE_ENV"
     | "VERCEL_ENV"
     | "GNG_LEARNING_APP_ENABLED"
@@ -114,7 +115,7 @@ export function resolveLearningAccess(input: {
   if (!isLearningAppEnabled(environment)) return { status: "disabled" };
 
   if (
-    !isProductionEnvironment(environment) &&
+    (!isProductionEnvironment(environment) || environment.CI === "true") &&
     environment.GNG_LEARNING_DEV_ACCESS === "true"
   ) {
     const previewEntitlements = (

@@ -13,9 +13,11 @@ import { getLearningEntitlements } from "./entitlements";
 export async function getLearningAccess(): Promise<LearningAccess> {
   if (!isLearningAppEnabled()) return { status: "disabled" };
 
-  if (!isProductionEnvironment()) {
-    return resolveLearningAccess({});
+  const previewAccess = resolveLearningAccess({});
+  if (previewAccess.status === "authenticated" && previewAccess.isPreview) {
+    return previewAccess;
   }
+  if (!isProductionEnvironment()) return previewAccess;
 
   const supabase = await createSupabaseServerClient();
   if (!supabase) return { status: "signed-out" };
