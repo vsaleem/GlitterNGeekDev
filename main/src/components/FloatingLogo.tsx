@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function FloatingLogo() {
   return (
     <a
-      href="https://glitterngeek.dev"
+      href="https://glitterngeek.com"
       target="_blank"
       rel="noopener noreferrer"
       aria-label="GlitterNGeek website"
