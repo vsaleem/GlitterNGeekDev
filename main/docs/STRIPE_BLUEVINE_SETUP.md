@@ -6,7 +6,7 @@ and Vercel—not in Git, source files, screenshots, Slack, or Obsidian.
 
 ## Architecture
 
-1. A customer selects the Small Business AI Toolkit on `glitterngeek.dev`.
+1. A customer selects the Small Business AI Toolkit on `glitterngeek.com`.
 2. `POST /api/checkout` creates a Stripe Checkout Session from the approved
    Stripe Price ID.
 3. Stripe displays eligible payment methods and processes the payment.
@@ -58,7 +58,7 @@ In Stripe **Settings > Payment methods**:
 
 In Stripe **Developers > Webhooks**, add:
 
-`https://www.glitterngeek.dev/api/stripe/webhook`
+`https://www.glitterngeek.com/api/stripe/webhook`
 
 Subscribe to:
 
@@ -74,7 +74,7 @@ Add these server-side variables separately for Preview and Production:
 
 ```text
 GNG_CHECKOUT_ENABLED=false
-GNG_SITE_URL=https://www.glitterngeek.dev
+GNG_SITE_URL=https://www.glitterngeek.com
 GNG_FULFILLMENT_MODE=manual
 STRIPE_SECRET_KEY=sk_live_...
 STRIPE_WEBHOOK_SECRET=whsec_...
